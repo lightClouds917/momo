@@ -8,16 +8,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 分布式事务注解
+ * The interface of Global transactional
  * @author IT云清
  * @date 2019年07月14日 22:35:31
+ * @since V1.0.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-@Documented
-public @interface MomoTransaction {
-
+public @interface GlobalTransactional {
     /**
      * 是否是分布式事务发起方  true 分布式事务发起方， false 非发起方
      * @return
