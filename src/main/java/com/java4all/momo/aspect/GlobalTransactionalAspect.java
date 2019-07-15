@@ -19,7 +19,7 @@ public class GlobalTransactionalAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(
             GlobalTransactionalAspect.class);
 
-    @Pointcut("@annotation(com.java4all.annotation.GlobalTransactional)")
+    @Pointcut("@annotation(com.java4all.momo.annotation.GlobalTransactional)")
     public void pointCut(){}
 
     @Before("pointCut()")
