@@ -1,7 +1,5 @@
-package com.java4all.aspect;
+package com.java4all.momo.aspect;
 
-import javax.swing.plaf.PanelUI;
-import jdk.nashorn.internal.scripts.JO;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +16,8 @@ import org.slf4j.LoggerFactory;
  */
 @Aspect
 public class GlobalTransactionalAspect {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalTransactionalAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            GlobalTransactionalAspect.class);
 
     @Pointcut("@annotation(com.java4all.annotation.GlobalTransactional)")
     public void pointCut(){}

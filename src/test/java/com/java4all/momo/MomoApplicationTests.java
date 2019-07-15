@@ -1,4 +1,4 @@
-package com.java4all;
+package com.java4all.momo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
