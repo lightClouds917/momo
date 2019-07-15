@@ -8,7 +8,7 @@
 		<version>2.1.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.java4all</groupId>
+	<groupId>com.java4all.momo</groupId>
 	<artifactId>momo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>momo</name>
@@ -22,12 +22,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
 		</dependency>
 		<!--aop-->
 		<dependency>
