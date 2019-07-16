@@ -7,6 +7,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
 
 /**
  * The aspect
@@ -15,7 +17,8 @@ import org.slf4j.LoggerFactory;
  * @since V1.0.0
  */
 @Aspect
-public class GlobalTransactionalAspect {
+@Component
+public class GlobalTransactionalAspect implements Ordered{
     private static final Logger LOGGER = LoggerFactory.getLogger(
             GlobalTransactionalAspect.class);
 
@@ -36,5 +39,15 @@ public class GlobalTransactionalAspect {
     @AfterReturning("pointCut()")
     public void afterExecute(JoinPoint joinPoint){
 
+    }
+
+    /**
+     * 本地事务和全局事务优先级区分
+     * @return
+     */
+    @Override
+    public int getOrder() {
+        //TODO 大还是小
+        return 10000;
     }
 }
