@@ -25,6 +25,10 @@ public class GlobalTransactionalAspect {
     @Before("pointCut()")
     public void beforeExecute(JoinPoint joinPoint){
 
+        //获取连接
+        //执行操作
+        //判断所有分支事务的状态
+        //提交/回滚
     }
 
     @AfterReturning("pointCut()")
