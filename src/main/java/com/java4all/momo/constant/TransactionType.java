@@ -10,10 +10,13 @@ public class TransactionType {
     public static int create = 1;
     public static String CREATE = "create";
 
-    public static int commit = 2;
+    public static int regist = 2;
+    public static String REGIST = "regist";
+
+    public static int commit = 3;
     public static String COMMIT = "commit";
 
-    public static int rollback = 3;
+    public static int rollback = 4;
     public static String ROLLBACK = "rollback";
 
 }

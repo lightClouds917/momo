@@ -26,7 +26,9 @@ public class GlobalTransactionalAspect {
     public void beforeExecute(JoinPoint joinPoint){
 
         //获取连接
+        //开启事务
         //执行操作
+        //wait .......
         //判断所有分支事务的状态
         //提交/回滚
     }
