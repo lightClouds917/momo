@@ -1,6 +1,8 @@
 package com.java4all.momo.core;
 
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import java.util.Map;
 
 /**
  * @author wangzhongxiang
@@ -8,4 +10,9 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class TransactionManager extends ChannelInboundHandlerAdapter{
 
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        Map map = (Map) msg;
+    }
 }
