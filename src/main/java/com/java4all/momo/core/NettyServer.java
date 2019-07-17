@@ -2,10 +2,19 @@ package com.java4all.momo.core;
 
 import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import com.java4all.momo.constant.TransactionType;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 import javax.naming.CompositeName;
 import org.apache.el.lang.ELArithmetic;
 import org.slf4j.Logger;
@@ -58,10 +67,39 @@ public class NettyServer {
     /**
      * send message to TC
      * @param groudId
-     * @param commit
+     * @param command
      */
-    private void sendMessage(String groudId, String commit) {
+    public void sendMessage(String groudId, String command) {
         //TODO 待处理
+        NioEventLoopGroup boosGroup = new NioEventLoopGroup();
+        NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+        ServerBootstrap serverBootstrap = new ServerBootstrap();
+        serverBootstrap.group(boosGroup,workerGroup)
+                .channel(NioServerSocketChannel.class)
+                .childHandler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel socketChannel) throws Exception {
+                        socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
+                        socketChannel.pipeline().addLast(new StringDecoder());
+                        socketChannel.pipeline().addLast(new TransactionManager());
+                    }
+                });
+        try {
+            ChannelFuture future = serverBootstrap.bind(8888).sync();
+            LOGGER.info("【momo】TransactionManager started on 8888......");
+            future.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            workerGroup.shutdownGracefully();
+            boosGroup.shutdownGracefully();
+        }
+
     }
+
+    public static void main(String[]args){
+        new NettyServer().sendMessage("1111","command");
+    }
+
 
 }
