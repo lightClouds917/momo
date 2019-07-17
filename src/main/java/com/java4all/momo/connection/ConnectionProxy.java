@@ -25,6 +25,12 @@ import java.util.concurrent.Executor;
  */
 public class ConnectionProxy implements Connection {
 
+    private Connection connection;
+
+    public ConnectionProxy(Connection connection) {
+        this.connection = connection;
+    }
+
     /**
      * Creates a <code>Statement</code> object for sending
      * SQL statements to the database.
