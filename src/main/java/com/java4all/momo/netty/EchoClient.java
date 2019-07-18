@@ -35,7 +35,7 @@ public class EchoClient {
             ChannelFuture future = bootstrap.connect().sync();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
-            
+            e.printStackTrace();
         }finally {
             group.shutdownGracefully().sync();
         }
