@@ -1,5 +1,6 @@
 package com.java4all.momo.connection;
 
+import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -18,12 +19,15 @@ import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author IT云清
- * @date 2019年07月16日 20:17:17
+ * @date 2019年07月16日 22:17:17
  */
 public class ConnectionProxy implements Connection {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalTransactionalAspect.class);
 
     /**Spring Connection*/
     private Connection connection;
@@ -31,6 +35,51 @@ public class ConnectionProxy implements Connection {
     public ConnectionProxy(Connection connection) {
         this.connection = connection;
     }
+
+    /**
+     * Makes all changes made since the previous
+     * commit/rollback permanent and releases any database locks
+     * currently held by this <code>Connection</code> object.
+     * This method should be
+     * used only when auto-commit mode has been disabled.
+     *
+     * @throws SQLException if a database access error occurs, this method is called while
+     * participating in a distributed transaction, if this method is called on a closed connection
+     * or this <code>Connection</code> object is in auto-commit mode
+     * @see #setAutoCommit
+     */
+    @Override
+    public void commit() throws SQLException {
+
+        // wait TODO
+        // 所有分支事务都无异常时，提交
+        LOGGER.info("【momo】global transaction {} commit start......","全局事务id");
+        connection.commit();
+        LOGGER.info("【momo】global transaction {} commit end......","全局事务id");
+    }
+
+    /**
+     * Undoes all changes made in the current transaction
+     * and releases any database locks currently held
+     * by this <code>Connection</code> object. This method should be
+     * used only when auto-commit mode has been disabled.
+     *
+     * @throws SQLException if a database access error occurs, this method is called while
+     * participating in a distributed transaction, this method is called on a closed connection or
+     * this <code>Connection</code> object is in auto-commit mode
+     * @see #setAutoCommit
+     */
+    @Override
+    public void rollback() throws SQLException {
+
+        //wait TODO
+        //如果有任何分支事务出现异常
+        LOGGER.info("【momo】global transaction {} rollback start......","全局事务id");
+        connection.rollback();
+        //TODO 回滚异常时的重试机制
+        LOGGER.info("【momo】global transaction {} rollback end......","全局事务id");
+    }
+
 
     @Override
     public Statement createStatement() throws SQLException {
@@ -61,41 +110,6 @@ public class ConnectionProxy implements Connection {
     @Override
     public boolean getAutoCommit() throws SQLException {
         return connection.getAutoCommit();
-    }
-
-    /**
-     * Makes all changes made since the previous
-     * commit/rollback permanent and releases any database locks
-     * currently held by this <code>Connection</code> object.
-     * This method should be
-     * used only when auto-commit mode has been disabled.
-     *
-     * @throws SQLException if a database access error occurs, this method is called while
-     * participating in a distributed transaction, if this method is called on a closed connection
-     * or this <code>Connection</code> object is in auto-commit mode
-     * @see #setAutoCommit
-     */
-    @Override
-    public void commit() throws SQLException {
-
-        // wait TODO
-    }
-
-    /**
-     * Undoes all changes made in the current transaction
-     * and releases any database locks currently held
-     * by this <code>Connection</code> object. This method should be
-     * used only when auto-commit mode has been disabled.
-     *
-     * @throws SQLException if a database access error occurs, this method is called while
-     * participating in a distributed transaction, this method is called on a closed connection or
-     * this <code>Connection</code> object is in auto-commit mode
-     * @see #setAutoCommit
-     */
-    @Override
-    public void rollback() throws SQLException {
-
-        //wait TODO
     }
 
     /**
