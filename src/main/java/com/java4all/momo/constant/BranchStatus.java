@@ -4,7 +4,6 @@ package com.java4all.momo.constant;
 /**
  * 分支状态
  * @author IT云清
- * @date 2019年07月18日 16:41:44
  */
 public enum BranchStatus {
 

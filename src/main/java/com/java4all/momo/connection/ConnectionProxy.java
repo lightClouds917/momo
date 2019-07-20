@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author IT云清
- * @date 2019年07月16日 22:17:17
  */
 public class ConnectionProxy implements Connection {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalTransactionalAspect.class);

@@ -9,7 +9,6 @@ import io.netty.util.CharsetUtil;
 
 /**
  * @author IT云清
- * @date 2019年07月18日 12:24:15
  */
 @Sharable
 public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf>{

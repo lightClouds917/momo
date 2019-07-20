@@ -11,7 +11,6 @@ import io.netty.util.CharsetUtil;
 /**
  * A demo about netty
  * @author IT云清
- * @date 2019年07月18日 08:55:38
  */
 @Sharable
 public class EchoServerHandler extends ChannelInboundHandlerAdapter{

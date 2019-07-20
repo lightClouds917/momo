@@ -11,7 +11,6 @@ import javax.sql.DataSource;
 /**
  * The DataSourceProxy
  * @author IT云清
- * @date 2019年07月15日 20:24:25
  */
 public class DataSourceProxy implements DataSource{
 

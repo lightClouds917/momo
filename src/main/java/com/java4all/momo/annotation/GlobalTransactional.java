@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
 /**
  * The interface of Global transactional
  * @author IT云清
- * @date 2019年07月14日 22:35:31
  * @since V1.0.0
  */
 @Target(ElementType.METHOD)

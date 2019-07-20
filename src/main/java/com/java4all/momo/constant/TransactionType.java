@@ -3,7 +3,6 @@ package com.java4all.momo.constant;
 /**
  * Transaction type constant
  * @author IT云清
- * @date 2019年07月16日 10:48:46
  */
 public class TransactionType {
 

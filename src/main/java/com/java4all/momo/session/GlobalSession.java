@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 /**
  * global transaction context
  * @author IT云清
- * @date 2019年07月18日 16:15:26
  * @see GlobalSession from seata
  */
 public class GlobalSession {

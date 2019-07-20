@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 /**
  * 接管Spring的数据库连接
  * @author IT云清
- * @date 2019年07月16日 20:21:19
  */
 @Aspect
 @Component

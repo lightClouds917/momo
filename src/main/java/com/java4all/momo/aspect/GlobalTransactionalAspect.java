@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 /**
  * The aspect
  * @author IT云清
- * @date 2019年07月15日 18:58:45
  * @since V1.0.0
  */
 @Aspect

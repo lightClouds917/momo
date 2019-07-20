@@ -2,7 +2,6 @@ package com.java4all.momo.core;
 
 /**
  * @author IT云清
- * @date 2019年07月16日 10:53:48
  */
 public class GlobalTransaction {
 

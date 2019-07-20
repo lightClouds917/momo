@@ -10,7 +10,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 /**
  * 客户端引导
  * @author IT云清
- * @date 2019年07月18日 12:32:01
  */
 public class EchoClient {
 
