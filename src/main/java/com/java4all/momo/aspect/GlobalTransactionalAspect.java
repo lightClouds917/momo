@@ -1,10 +1,15 @@
 package com.java4all.momo.aspect;
 
+import com.java4all.momo.annotation.GlobalTransactional;
+import java.lang.reflect.Method;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -27,6 +32,15 @@ public class GlobalTransactionalAspect implements Ordered{
     @Before("pointCut()")
     public void beforeExecute(JoinPoint joinPoint){
 
+        boolean start = this.isStart(joinPoint);
+
+        //判断是否是事务发起方
+        if(start){
+            //创建全局事务
+        }else {
+            //创建分支事务
+        }
+
         //获取连接
         //开启事务
         //执行操作
@@ -38,6 +52,23 @@ public class GlobalTransactionalAspect implements Ordered{
     @AfterReturning("pointCut()")
     public void afterExecute(JoinPoint joinPoint){
 
+    }
+
+    /**
+     * is transaction starter
+     * @param joinPoint
+     * @return
+     */
+    private boolean isStart(JoinPoint joinPoint){
+        Signature signature = joinPoint.getSignature();
+        MethodSignature methodSignature = (MethodSignature) signature;
+        Method method = methodSignature.getMethod();
+        if (method.isAnnotationPresent(GlobalTransactional.class)){
+            GlobalTransactional globalTransactional = method.getAnnotation(GlobalTransactional.class);
+            return globalTransactional.isStart();
+        }else {
+            return false;
+        }
     }
 
     /**
