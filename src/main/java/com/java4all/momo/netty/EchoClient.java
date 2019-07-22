@@ -6,12 +6,16 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 客户端引导
  * @author IT云清
  */
 public class EchoClient {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EchoClient.class);
 
     private final String host;
     
@@ -31,6 +35,7 @@ public class EchoClient {
                     }
                 });
         try {
+            LOGGER.info("client started on {}:{}",host,port);
             ChannelFuture future = bootstrap.connect().sync();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {

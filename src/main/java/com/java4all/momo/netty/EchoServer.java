@@ -1,5 +1,6 @@
 package com.java4all.momo.netty;
 
+import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -7,12 +8,14 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author IT云清
  */
 public class EchoServer {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(EchoServer.class);
     private final int port;
 
     public EchoServer(int port) {
@@ -34,6 +37,7 @@ public class EchoServer {
                     }
                 });
         try {
+            LOGGER.info("server started on 8888");
             ChannelFuture future = serverBootstrap.bind().sync();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
@@ -46,7 +50,6 @@ public class EchoServer {
     public static void main(String[]args){
         try {
             new EchoServer(8888).start();
-            System.out.println("server started on 8888");
         }catch (Exception ex){
             ex.printStackTrace();
         }
