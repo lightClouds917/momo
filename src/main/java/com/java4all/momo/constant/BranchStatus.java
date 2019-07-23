@@ -1,6 +1,11 @@
 package com.java4all.momo.constant;
 
 
+import com.java4all.momo.exception.NeverHappenExcetion;
+import com.java4all.momo.request.BranchRollbackRequest;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 分支状态
  * @author IT云清
@@ -79,4 +84,19 @@ public enum BranchStatus {
         this.code = code;
     }
 
+    private static final Map<Integer,BranchStatus> MAP = new HashMap<>(values().length);
+
+    static {
+        for (BranchStatus statu : values()){
+            MAP.put(statu.code,statu);
+        }
+    }
+
+    public static BranchStatus get(int code){
+        BranchStatus status = MAP.get(code);
+        if(null == status){
+            throw new NeverHappenExcetion("Unknown BranchStatus[" + code + "]");
+        }
+        return status;
+    }
 }
