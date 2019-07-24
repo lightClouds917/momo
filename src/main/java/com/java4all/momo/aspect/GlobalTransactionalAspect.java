@@ -1,6 +1,7 @@
 package com.java4all.momo.aspect;
 
 import com.java4all.momo.annotation.GlobalTransactional;
+import com.java4all.momo.request.BranchRegistRequest;
 import java.lang.reflect.Method;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,8 +38,14 @@ public class GlobalTransactionalAspect implements Ordered{
         //判断是否是事务发起方
         if(start){
             //创建全局事务
+            String groupId = "11111";
         }else {
             //创建分支事务
+            //获取全局事务id
+            BranchRegistRequest branchRegistRequest = new BranchRegistRequest();
+            branchRegistRequest.setXid("");
+            branchRegistRequest.setApplicationData("");
+            branchRegistRequest.setResourceId("");
         }
 
         //获取连接
