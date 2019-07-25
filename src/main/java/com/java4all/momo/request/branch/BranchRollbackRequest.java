@@ -1,4 +1,4 @@
-package com.java4all.momo.request;
+package com.java4all.momo.request.branch;
 
 /**
  * Branch rollback request context

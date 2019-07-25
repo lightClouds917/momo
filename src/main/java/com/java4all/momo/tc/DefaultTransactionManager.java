@@ -1,8 +1,11 @@
 package com.java4all.momo.tc;
 
 import com.java4all.momo.constant.GlobalStatus;
+import com.java4all.momo.request.global.GlobalBeginRequest;
+import com.java4all.momo.request.global.GlobalCommitRequest;
 
 /**
+ * Default transaction manager
  * @author IT云清
  */
 public class DefaultTransactionManager implements TransactionManager{
@@ -18,8 +21,12 @@ public class DefaultTransactionManager implements TransactionManager{
     @Override
     public String begin(String applicationId, String transactionServiceGroupId, String name,
             int timeout) {
-
-        return null;
+        GlobalBeginRequest request = new GlobalBeginRequest();
+        request.setTransactionName(name);
+        request.setTimeout(timeout);
+        //TODO 远程调用后拿到xin
+        String xid = "远程调用";
+        return xid;
     }
 
     /**
@@ -30,6 +37,8 @@ public class DefaultTransactionManager implements TransactionManager{
      */
     @Override
     public GlobalStatus commit(String xid) {
+        GlobalCommitRequest request = new GlobalCommitRequest();
+        request.setXid(xid);
         return null;
     }
 

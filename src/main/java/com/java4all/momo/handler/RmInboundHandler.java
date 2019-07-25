@@ -1,7 +1,7 @@
 package com.java4all.momo.handler;
 
-import com.java4all.momo.request.BranchCommitRequest;
-import com.java4all.momo.request.BranchRollbackRequest;
+import com.java4all.momo.request.branch.BranchCommitRequest;
+import com.java4all.momo.request.branch.BranchRollbackRequest;
 import com.java4all.momo.responce.BranchCommitResponse;
 import com.java4all.momo.responce.BranchRollbackResponse;
 

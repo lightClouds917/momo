@@ -1,10 +1,9 @@
 package com.java4all.momo.aspect;
 
 import com.java4all.momo.annotation.GlobalTransactional;
-import com.java4all.momo.request.BranchRegistRequest;
+import com.java4all.momo.request.branch.BranchRegistRequest;
 import java.lang.reflect.Method;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
