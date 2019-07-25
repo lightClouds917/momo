@@ -2,12 +2,11 @@ package com.java4all.momo.constant;
 
 
 import com.java4all.momo.exception.NeverHappenExcetion;
-import com.java4all.momo.request.BranchRollbackRequest;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 分支状态
+ * Branch transaction status
  * @author IT云清
  */
 public enum BranchStatus {
