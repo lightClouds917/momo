@@ -1,10 +1,12 @@
 package com.java4all.momo.request.global;
 
+import com.java4all.momo.request.AbstractTransactionRequest;
+
 /**
  * Global transaction begin request
  * @author IT云清
  */
-public class GlobalBeginRequest {
+public class GlobalBeginRequest  extends AbstractTransactionRequest {
 
     private int timeout = 60000;
 
