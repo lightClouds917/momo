@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author IT云清
  */
-public class AbstractTransactionResponse implements Serializable{
+public abstract class AbstractTransactionResponse implements Serializable{
 
     protected static final long serialVersionUID = 1441020418526899889L;
 

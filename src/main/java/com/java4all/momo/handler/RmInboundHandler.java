@@ -2,8 +2,8 @@ package com.java4all.momo.handler;
 
 import com.java4all.momo.request.branch.BranchCommitRequest;
 import com.java4all.momo.request.branch.BranchRollbackRequest;
-import com.java4all.momo.responce.BranchCommitResponse;
-import com.java4all.momo.responce.BranchRollbackResponse;
+import com.java4all.momo.responce.branch.BranchCommitResponse;
+import com.java4all.momo.responce.branch.BranchRollbackResponse;
 
 /**
  * The interface RM inbound handler

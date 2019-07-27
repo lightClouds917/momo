@@ -1,10 +1,12 @@
-package com.java4all.momo.responce;
+package com.java4all.momo.responce.global;
+
+import com.java4all.momo.responce.AbstractTransactionResponse;
 
 /**
  * Global begin response
  * @author IT云清
  */
-public class GlobalBeginResponse extends AbstractTransactionResponse{
+public class GlobalBeginResponse extends AbstractTransactionResponse {
 
     private String xid;
 
