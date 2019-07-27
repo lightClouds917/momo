@@ -70,8 +70,8 @@ public class DefaultTransactionManager implements TransactionManager{
         try {
             //远程调用
         }catch (Exception ex){
-
+            //自定义远程调用异常
         }
-        return new AbstractTransactionResponse();
+        return null;
     }
 }
