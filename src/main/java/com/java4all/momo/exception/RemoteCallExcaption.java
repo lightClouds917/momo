@@ -1,16 +1,17 @@
 package com.java4all.momo.exception;
 
 /**
+ * Throw when remote call wrong
  * @author IT云清
  */
-public class NeverHappenExcetion extends RuntimeException{
+public class RemoteCallExcaption extends RuntimeException{
 
     /**
      * Constructs a new runtime exception with {@code null} as its
      * detail message.  The cause is not initialized, and may subsequently be
      * initialized by a call to {@link #initCause}.
      */
-    public NeverHappenExcetion() {
+    public RemoteCallExcaption() {
     }
 
     /**
@@ -21,7 +22,7 @@ public class NeverHappenExcetion extends RuntimeException{
      * @param message the detail message. The detail message is saved for later retrieval by the {@link
      * #getMessage()} method.
      */
-    public NeverHappenExcetion(String message) {
+    public RemoteCallExcaption(String message) {
         super(message);
     }
 
@@ -37,7 +38,7 @@ public class NeverHappenExcetion extends RuntimeException{
      * (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or unknown.)
      * @since 1.4
      */
-    public NeverHappenExcetion(String message, Throwable cause) {
+    public RemoteCallExcaption(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -52,7 +53,7 @@ public class NeverHappenExcetion extends RuntimeException{
      * (A <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or unknown.)
      * @since 1.4
      */
-    public NeverHappenExcetion(Throwable cause) {
+    public RemoteCallExcaption(Throwable cause) {
         super(cause);
     }
 }
