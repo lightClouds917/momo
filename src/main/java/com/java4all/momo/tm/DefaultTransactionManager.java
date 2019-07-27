@@ -6,7 +6,6 @@ import com.java4all.momo.request.AbstractTransactionRequest;
 import com.java4all.momo.request.global.GlobalBeginRequest;
 import com.java4all.momo.request.global.GlobalCommitRequest;
 import com.java4all.momo.responce.AbstractTransactionResponse;
-import com.java4all.momo.tm.TransactionManager;
 
 /**
  * Default transaction manager
