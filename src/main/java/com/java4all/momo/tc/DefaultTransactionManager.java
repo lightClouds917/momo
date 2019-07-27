@@ -1,8 +1,10 @@
 package com.java4all.momo.tc;
 
 import com.java4all.momo.constant.GlobalStatus;
+import com.java4all.momo.request.AbstractTransactionRequest;
 import com.java4all.momo.request.global.GlobalBeginRequest;
 import com.java4all.momo.request.global.GlobalCommitRequest;
+import com.java4all.momo.responce.AbstractTransactionResponse;
 
 /**
  * Default transaction manager
@@ -62,5 +64,14 @@ public class DefaultTransactionManager implements TransactionManager{
     @Override
     public GlobalStatus getStatus(String xid) {
         return null;
+    }
+
+    public AbstractTransactionResponse syncCall(AbstractTransactionRequest request){
+        try {
+            //远程调用
+        }catch (Exception ex){
+
+        }
+        return new AbstractTransactionResponse();
     }
 }
