@@ -1,16 +1,18 @@
-package com.java4all.momo.tc;
+package com.java4all.momo.tm;
 
 import com.java4all.momo.constant.GlobalStatus;
+import com.java4all.momo.exception.RemoteCallExcaption;
 import com.java4all.momo.request.AbstractTransactionRequest;
 import com.java4all.momo.request.global.GlobalBeginRequest;
 import com.java4all.momo.request.global.GlobalCommitRequest;
 import com.java4all.momo.responce.AbstractTransactionResponse;
+import com.java4all.momo.tm.TransactionManager;
 
 /**
  * Default transaction manager
  * @author IT云清
  */
-public class DefaultTransactionManager implements TransactionManager{
+public class DefaultTransactionManager implements TransactionManager {
 
     /**
      * begin a new global transaction
@@ -69,8 +71,9 @@ public class DefaultTransactionManager implements TransactionManager{
     public AbstractTransactionResponse syncCall(AbstractTransactionRequest request){
         try {
             //远程调用
+
         }catch (Exception ex){
-            //自定义远程调用异常
+            throw new RemoteCallExcaption("【momo】 remote call error");
         }
         return null;
     }
