@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NettyServer {
 
-    // socket -> netty TODO 待处理
+    // socket -> nettydemo TODO 待处理
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalTransactionalAspect.class);
 

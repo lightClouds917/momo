@@ -1,6 +1,5 @@
-package com.java4all.momo.netty;
+package com.java4all.momo.nettydemo;
 
-import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

@@ -1,6 +1,5 @@
-package com.java4all.momo.netty;
+package com.java4all.momo.nettydemo;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.java4all.momo.constant.TransactionType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

@@ -1,4 +1,4 @@
-package com.java4all.momo.netty;
+package com.java4all.momo.nettydemo;
 
 import com.java4all.momo.constant.TransactionType;
 import io.netty.buffer.ByteBuf;
@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A demo about netty
+ * A demo about nettydemo
  * @author IT云清
  */
 @Sharable
@@ -34,17 +34,17 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
                 LOGGER.info("【momo server】执行{}操作",TransactionType.REGIST);
                 break;
         }
-        ctx.write("【momo】Global transaction "+transationType+"ed");
+        ctx.writeAndFlush("【momo】Global transaction "+transationType+"ed");
     }
 
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        cause.printStackTrace();
-        ctx.close();
-    }
+//    @Override
+//    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+//        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
+//    }
+//
+//    @Override
+//    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+//        cause.printStackTrace();
+//        ctx.close();
+//    }
 }

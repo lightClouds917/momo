@@ -1,4 +1,4 @@
-package com.java4all.momo.netty;
+package com.java4all.momo.nettydemo;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

@@ -29,7 +29,7 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
-		<!--netty-->
+		nettydemoetty-->
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
