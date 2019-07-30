@@ -41,13 +41,14 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
                 LOGGER.info("【momo server】执行{}操作",TransactionType.REGIST);
                 break;
         }
-        ctx.writeAndFlush("【momo】Global transaction "+transationType+"ed");
+        String response = "【momo】Global transaction "+transationType+"ed";
+        ctx.writeAndFlush(Unpooled.copiedBuffer(response.getBytes()));
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 //        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
-        ctx.writeAndFlush("【momo】Global transaction ed");
+//        ctx.writeAndFlush("【momo】Global transaction ed");
     }
 
     @Override
