@@ -1,19 +1,14 @@
 package com.java4all.momo.nettydemo;
 
-import io.netty.buffer.ByteBuf;
+import com.alibaba.fastjson.JSONPObject;
+import com.java4all.momo.request.branch.BranchRegistRequest;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * @author IT云清
  */
-public class TransactionManagerClientHandler extends SimpleChannelInboundHandler<ByteBuf>{
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf)
-            throws Exception {
-
-    }
+public class TransactionManagerClientHandler extends ChannelInboundHandlerAdapter{
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -22,7 +17,8 @@ public class TransactionManagerClientHandler extends SimpleChannelInboundHandler
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        //想tc发送消息
+        //向tc发送消息
+        BranchRegistRequest request = new BranchRegistRequest();
         ctx.writeAndFlush("");
     }
 
