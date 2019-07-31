@@ -36,7 +36,7 @@ public class EchoServer {
                     }
                 });
         try {
-            LOGGER.info("server started on 8888");
+            LOGGER.info("EchoServer started on 8888");
             ChannelFuture future = serverBootstrap.bind().sync();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
@@ -48,7 +48,7 @@ public class EchoServer {
     
     public static void main(String[]args){
         try {
-            new EchoServer(8888).start();
+//            new EchoServer(8888).start();
         }catch (Exception ex){
             ex.printStackTrace();
         }

@@ -1,6 +1,5 @@
 package com.java4all.momo.nettydemo;
 
-import com.alibaba.fastjson.JSONPObject;
 import com.java4all.momo.request.branch.BranchRegistRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

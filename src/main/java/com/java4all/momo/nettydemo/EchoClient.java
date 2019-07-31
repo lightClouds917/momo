@@ -35,7 +35,7 @@ public class EchoClient {
                     }
                 });
         try {
-            LOGGER.info("client started on {}:{}",host,port);
+            LOGGER.info("EchoClient started on {}:{}",host,port);
             ChannelFuture future = bootstrap.connect().sync();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
@@ -46,7 +46,7 @@ public class EchoClient {
     }
     
     public static void main(String[]args)throws Exception{
-        new EchoClient("localhost",8888).start();
+//        new EchoClient("localhost",8888).start();
     }
 
     public EchoClient(String host, int port) {
