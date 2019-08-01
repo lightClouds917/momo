@@ -1,8 +1,12 @@
 package com.java4all.momo.nettydemo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java4all.momo.request.branch.BranchRegistRequest;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+import java.util.Map;
 
 /**
  * @author IT云清
@@ -11,7 +15,9 @@ public class TransactionManagerClientHandler extends ChannelInboundHandlerAdapte
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        super.channelRead(ctx, msg);
+        ByteBuf in = (ByteBuf) msg;
+        ObjectMapper mapper = new ObjectMapper();
+        Map map = mapper.readValue(in.toString(CharsetUtil.UTF_8), Map.class);
     }
 
     @Override
