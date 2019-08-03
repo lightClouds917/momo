@@ -5,7 +5,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * netty client starter
+ * netty2 client starter
  * @author IT云清
  */
 @Component

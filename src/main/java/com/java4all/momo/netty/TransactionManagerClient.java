@@ -1,4 +1,4 @@
-package com.java4all.momo.nettydemo.netty;
+package com.java4all.momo.netty;
 
 import com.java4all.momo.nettydemo.EchoClient;
 import io.netty.bootstrap.Bootstrap;
