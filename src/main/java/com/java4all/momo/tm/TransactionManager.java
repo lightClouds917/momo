@@ -5,6 +5,8 @@ import com.java4all.momo.constant.GlobalStatus;
 /**
  * Transaction manager
  * Define a global transaction and control it.
+ * TM:事务管理器
+ * 负责全局事务的开启，全局事务的提交，全局事务的回滚
  * @author IT云清
  */
 public interface TransactionManager {

@@ -1,4 +1,4 @@
-package com.java4all.momo.nettydemo;
+package com.java4all.momo.nettydemo.netty;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java4all.momo.request.branch.BranchRegistRequest;

@@ -5,7 +5,8 @@ import com.java4all.momo.constant.BranchStatus;
 /**
  * Resource manager(RM)
  * Controller a branch transaction commit or rollback
- *
+ * RM:资源管理器
+ * 控制分支事务，负责分支事务注册，状态汇报，并接收事务协调器发出的指令，从而驱动分支事务的提交和回滚。
  * @author IT云清
  */
 public interface ResourceManagerInbound {

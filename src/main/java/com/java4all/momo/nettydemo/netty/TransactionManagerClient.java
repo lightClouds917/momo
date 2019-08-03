@@ -1,5 +1,6 @@
-package com.java4all.momo.nettydemo;
+package com.java4all.momo.nettydemo.netty;
 
+import com.java4all.momo.nettydemo.EchoClient;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
