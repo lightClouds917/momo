@@ -14,6 +14,6 @@ public class EchoServerStarter implements CommandLineRunner{
 
     @Override
     public void run(String... strings) throws Exception {
-        new EchoServer(8888).start();
+//        new EchoServer(8888).start();
     }
 }

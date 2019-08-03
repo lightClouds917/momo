@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 客户端引导
+ * echo client
  * @author IT云清
  */
 public class EchoClient {
@@ -46,7 +46,7 @@ public class EchoClient {
     }
     
     public static void main(String[]args)throws Exception{
-//        new EchoClient("localhost",8888).start();
+        new EchoClient("localhost",8888).start();
     }
 
     public EchoClient(String host, int port) {

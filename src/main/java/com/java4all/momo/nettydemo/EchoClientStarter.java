@@ -14,6 +14,6 @@ public class EchoClientStarter implements CommandLineRunner{
 
     @Override
     public void run(String... strings) throws Exception {
-        new EchoClient("localhost",8888).start();
+//        new EchoClient("localhost",8888).start();
     }
 }

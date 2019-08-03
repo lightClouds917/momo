@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * echo server
  * @author IT云清
  */
 public class EchoServer {
@@ -48,7 +49,7 @@ public class EchoServer {
     
     public static void main(String[]args){
         try {
-//            new EchoServer(8888).start();
+            new EchoServer(8888).start();
         }catch (Exception ex){
             ex.printStackTrace();
         }

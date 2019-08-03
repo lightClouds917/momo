@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A demo about nettydemo
+ * echo serverhandler
  * @author IT云清
  */
 @Sharable
