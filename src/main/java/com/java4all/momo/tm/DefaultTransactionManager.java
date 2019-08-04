@@ -2,10 +2,13 @@ package com.java4all.momo.tm;
 
 import com.java4all.momo.constant.GlobalStatus;
 import com.java4all.momo.exception.RemoteCallExcaption;
+import com.java4all.momo.netty.TmRpcClient;
 import com.java4all.momo.request.AbstractTransactionRequest;
 import com.java4all.momo.request.global.GlobalBeginRequest;
 import com.java4all.momo.request.global.GlobalCommitRequest;
 import com.java4all.momo.responce.AbstractTransactionResponse;
+import com.java4all.momo.responce.global.GlobalBeginResponse;
+import com.java4all.momo.responce.global.GlobalCommitResponse;
 
 /**
  * Default transaction manager
@@ -27,8 +30,8 @@ public class DefaultTransactionManager implements TransactionManager {
         GlobalBeginRequest request = new GlobalBeginRequest();
         request.setTransactionName(name);
         request.setTimeout(timeout);
-        //TODO 远程调用后拿到xin
-        String xid = "远程调用";
+        GlobalBeginResponse response = (GlobalBeginResponse) TmRpcClient.syncCall(request);
+        String xid = response.getXid();
         return xid;
     }
 
@@ -42,6 +45,8 @@ public class DefaultTransactionManager implements TransactionManager {
     public GlobalStatus commit(String xid) {
         GlobalCommitRequest request = new GlobalCommitRequest();
         request.setXid(xid);
+        GlobalCommitResponse response = (GlobalCommitResponse) TmRpcClient
+                .syncCall(request);
         return null;
     }
 
