@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author IT云清
+ * @see NettyClientChannelManager
  */
 public class NettyClientChannelManager {
 
@@ -23,9 +24,19 @@ public class NettyClientChannelManager {
     public Channel acquireChannel(String serverAddress){
         Channel channelToServer = channels.get(serverAddress);
         if(null != channelToServer){
-
+            return channelToServer;
 
         }
+        LOGGER.info("will connct to"+serverAddress);
+        return null;
+    }
+
+    public Channel doConnect(String serverAddress){
+        Channel channel = channels.get(serverAddress);
+        if(null != channel && channel.isActive()){
+            return channel;
+        }
+        //TODO add netty pool
         return null;
     }
 
@@ -41,13 +52,14 @@ public class NettyClientChannelManager {
                     e.printStackTrace();
                 }
                 rmChannel = channels.get(serverAddress);
-                //TODO seata?? NettyClientChannelManager
-                if(null != rmChannel || rmChannel.isActive()){
+                //TODO seata??
+                if(null != rmChannel && rmChannel.isActive()){
                     return rmChannel;
                 }
                 if(i == NettyClientConfig.getMaxCheckAliveRetry()){
                     LOGGER.warn("channel"+rmChannel+"is not active after too long wait,clost it!");
-
+                    channels.remove(serverAddress);
+                    return null;
                 }
             }
         }
