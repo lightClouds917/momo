@@ -8,4 +8,13 @@ import com.java4all.momo.request.AbstractTransactionRequest;
  */
 public class GlobalRollbackRequest extends AbstractTransactionRequest{
 
+    private String xid;
+
+    public String getXid() {
+        return xid;
+    }
+
+    public void setXid(String xid) {
+        this.xid = xid;
+    }
 }
