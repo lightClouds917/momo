@@ -16,4 +16,6 @@ public class GlobalSession {
 
     private long transactionId;
 
+    //ceshi
+
 }
