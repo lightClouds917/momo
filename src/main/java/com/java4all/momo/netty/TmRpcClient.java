@@ -13,7 +13,8 @@ public class TmRpcClient {
     //add something
 
 
-    public TmRpcClient() {
+    public TmRpcClient(NettyClientConfig config) {
+        //TODO
     }
 
     public static AbstractTransactionResponse syncCall(AbstractTransactionRequest request){
@@ -35,7 +36,7 @@ public class TmRpcClient {
         if(null == tmRpcClient){
             synchronized (TmRpcClient.class){
                 if(null == tmRpcClient){
-                    new TmRpcClient();
+                    new TmRpcClient(config);
                 }
             }
         }
