@@ -12,6 +12,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import java.util.Random;
 
 /**
+ * netty pool
  * @author IT云清
  * 参考：https://www.jianshu.com/p/7132d84c2461
  */
@@ -23,6 +24,7 @@ public class NettyChannelPool {
     private Object[] locks;
     private static final int MAX_CHANNEL_COUNT = 4;
 
+    // TODO
     public Channel syncGetChannel(){
         int index = new Random().nextInt(MAX_CHANNEL_COUNT);
         Channel channel = channels[index];
