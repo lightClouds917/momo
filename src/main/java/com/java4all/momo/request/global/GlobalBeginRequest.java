@@ -12,6 +12,8 @@ public class GlobalBeginRequest  extends AbstractTransactionRequest {
 
     private String transactionName;
 
+    private String xid;
+
     //handler 方法
 
     public int getTimeout() {
@@ -30,11 +32,20 @@ public class GlobalBeginRequest  extends AbstractTransactionRequest {
         this.transactionName = transactionName;
     }
 
+    public String getXid() {
+        return xid;
+    }
+
+    public void setXid(String xid) {
+        this.xid = xid;
+    }
+
     @Override
     public String toString() {
         return "GlobalBeginRequest{" +
                 "timeout=" + timeout +
                 ", transactionName='" + transactionName + '\'' +
+                ", xid='" + xid + '\'' +
                 '}';
     }
 }

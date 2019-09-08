@@ -7,5 +7,7 @@ package com.java4all.momo.constant;
 public class TransactionInfoConstant {
 
     public static final int DEFAULT_TIME_OUT = 60000;
+    public static final String EMPTY_STRING = "";
+    public static final String SEMICOLON_SPLIT = ":";
 
 }
