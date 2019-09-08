@@ -1,5 +1,8 @@
 package com.java4all.momo.annotation;
 
+import static com.java4all.momo.constant.TransactionInfoConstant.DEFAULT_TIME_OUT;
+
+import com.java4all.momo.constant.TransactionInfoConstant;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -21,4 +24,17 @@ public @interface GlobalTransactional {
      * @version 1.0.0
      */
     boolean isStart() default false;
+
+    /**
+     * Global transaction timeoutMills in MILLISECONDS.
+     * @return
+     */
+    int defaultTimeMills() default DEFAULT_TIME_OUT;
+
+    /**
+     * Global transaction name
+     * @return
+     */
+    String name() default "";
+
 }

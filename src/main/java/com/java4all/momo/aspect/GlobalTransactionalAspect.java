@@ -2,6 +2,7 @@ package com.java4all.momo.aspect;
 
 import com.java4all.momo.annotation.GlobalTransactional;
 import com.java4all.momo.request.branch.BranchRegistRequest;
+import com.java4all.momo.request.global.GlobalBeginRequest;
 import java.lang.reflect.Method;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -38,6 +39,11 @@ public class GlobalTransactionalAspect implements Ordered{
         if(start){
             //创建全局事务
             String groupId = "11111";
+
+            GlobalBeginRequest request = new GlobalBeginRequest();
+            request.setTransactionName("");
+            request.setTimeout(11);
+
         }else {
             //创建分支事务
             //获取全局事务id
