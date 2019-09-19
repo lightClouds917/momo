@@ -13,3 +13,5 @@ pinpoint:https://www.cnblogs.com/yyhh/p/6106472.html
 蚂蚁金服大规模分布式事务实践和开源详解 | GIAC 实录 https://yq.aliyun.com/articles/707338?spm=a2c4e.11153940.0.0.646822e7oMeq0H
 
 分布式事务 Seata Saga 模式首秀以及三种模式详解 | Meetup#3 回顾 https://yq.aliyun.com/articles/715118?spm=a2c4e.11153940.0.0.646822e7oMeq0H
+
+一个非常好的本地事务分析：https://www.jianshu.com/p/149de22ca54b

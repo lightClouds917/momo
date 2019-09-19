@@ -2,7 +2,6 @@ package com.java4all.momo.annotation;
 
 import static com.java4all.momo.constant.TransactionInfoConstant.DEFAULT_TIME_OUT;
 
-import com.java4all.momo.constant.TransactionInfoConstant;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;

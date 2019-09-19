@@ -5,14 +5,11 @@ import static com.java4all.momo.constant.TransactionInfoConstant.EMPTY_STRING;
 import static com.java4all.momo.constant.TransactionInfoConstant.SEMICOLON_SPLIT;
 
 import com.java4all.momo.annotation.GlobalTransactional;
-import com.java4all.momo.constant.TransactionInfoConstant;
-import com.java4all.momo.core.GlobalTransaction;
 import com.java4all.momo.request.branch.BranchRegistRequest;
 import com.java4all.momo.request.global.GlobalBeginRequest;
 import com.java4all.momo.util.UUIDGenerator;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -24,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
-import sun.util.resources.LocaleData;
 
 /**
  * The aspect
