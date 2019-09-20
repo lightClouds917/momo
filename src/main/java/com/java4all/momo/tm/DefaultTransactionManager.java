@@ -49,6 +49,7 @@ public class DefaultTransactionManager implements TransactionManager {
         request.setXid(xid);
         GlobalCommitResponse response = (GlobalCommitResponse) TmRpcClient
                 .syncCall(request);
+
         return null;
     }
 
@@ -86,5 +87,23 @@ public class DefaultTransactionManager implements TransactionManager {
             throw new RemoteCallExcaption("【momo】 remote call error");
         }
         return null;
+    }
+
+    /**
+     * prepare for commit
+     * @param xid xid of global transaction
+     * @return
+     */
+    public GlobalStatus prepareForCommit(String xid){
+        //TODO
+        return null;
+    }
+
+    /**
+     * clean up after commit
+     * @param xid
+     */
+    public void cleanUpAfterCommit(String xid){
+        //TODO
     }
 }
