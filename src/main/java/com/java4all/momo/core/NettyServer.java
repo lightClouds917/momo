@@ -2,6 +2,7 @@ package com.java4all.momo.core;
 
 import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import com.java4all.momo.constant.TransactionType;
+import com.java4all.momo.tm.DefaultTransactionManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -77,12 +78,12 @@ public class NettyServer {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
                         socketChannel.pipeline().addLast(new StringDecoder());
-                        socketChannel.pipeline().addLast(new TransactionManager());
+                        socketChannel.pipeline().addLast(new DefaultTransactionManager());
                     }
                 });
         try {
             ChannelFuture future = serverBootstrap.bind(8888).sync();
-            LOGGER.info("【momo】TransactionManager started on 8888......");
+            LOGGER.info("【momo】DefaultTransactionManager started on 8888......");
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();

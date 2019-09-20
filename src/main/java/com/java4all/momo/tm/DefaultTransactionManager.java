@@ -11,12 +11,14 @@ import com.java4all.momo.responce.AbstractTransactionResponse;
 import com.java4all.momo.responce.global.GlobalBeginResponse;
 import com.java4all.momo.responce.global.GlobalCommitResponse;
 import com.java4all.momo.responce.global.GlobalRollbackResponse;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * Default transaction manager
  * @author IT云清
  */
-public class DefaultTransactionManager implements TransactionManager {
+public class DefaultTransactionManager extends ChannelInboundHandlerAdapter implements TransactionManager  {
 
     /**
      * begin a new global transaction
@@ -105,5 +107,10 @@ public class DefaultTransactionManager implements TransactionManager {
      */
     public void cleanUpAfterCommit(String xid){
         //TODO
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        super.channelRead(ctx, msg);
     }
 }
