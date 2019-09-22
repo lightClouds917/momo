@@ -85,6 +85,7 @@ import org.springframework.transaction.support.TransactionSynchronizationUtils;
 public abstract class AbstractPlatformTransactionManager_ implements PlatformTransactionManager, Serializable {
 
 	/**
+	 * 始终激活事务同步，即使由于PROPAGATION_SUPPORTS这种传播属性导致的空事务，或者没有后台事务
 	 * Always activate transaction synchronization, even for "empty" transactions
 	 * that result from PROPAGATION_SUPPORTS with no existing backend transaction.
 	 * @see TransactionDefinition#PROPAGATION_SUPPORTS
@@ -94,6 +95,8 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	public static final int SYNCHRONIZATION_ALWAYS = 0;
 
 	/**
+	 * 仅仅激活实际存在的事务的事务同步
+	 * 这意味着，由PROPAGATION_SUPPORTS这种传播属性导致的空事务或者没有后台事务时，是不激活事务同步的
 	 * Activate transaction synchronization only for actual transactions,
 	 * that is, not for empty ones that result from PROPAGATION_SUPPORTS with
 	 * no existing backend transaction.
@@ -104,6 +107,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	public static final int SYNCHRONIZATION_ON_ACTUAL_TRANSACTION = 1;
 
 	/**
+	 * 从不主动激活事务同步，即使是对于实际事务
 	 * Never active transaction synchronization, not even for actual transactions.
 	 */
 	public static final int SYNCHRONIZATION_NEVER = 2;
@@ -157,6 +161,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 返回此事务管理器是否应当激活线程绑定的事务同步支持
 	 * Return if this transaction manager should activate the thread-bound
 	 * transaction synchronization support.
 	 */
@@ -413,7 +418,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 						"isolation level will effectively be ignored: " + definition);
 			}
 			boolean newSynchronization = (getTransactionSynchronization() == SYNCHRONIZATION_ALWAYS);
-			//返回事务状态对象，改对象内部持有事务对象
+			//返回事务状态对象，该对象内部持有事务对象
 			return prepareTransactionStatus(definition, null, true, newSynchronization, debugEnabled, null);
 		}
 	}
@@ -432,31 +437,41 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 					"Existing transaction found for transaction marked with propagation 'never'");
 		}
 
-		//在无事务状态下执行，如果当前有事务，就把当前的事务挂起
+		//PROPAGATION_NOT_SUPPORTED在无事务状态下执行，如果当前有事务，就把当前的事务挂起
 		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
 			if (debugEnabled) {
 				logger.debug("Suspending current transaction");
 			}
+			//挂起当前事务，并停止当前的同步
 			Object suspendedResources = suspend(transaction);
+			//返回当前事务管理器对线程绑定的事务同步的支持状态
 			boolean newSynchronization = (getTransactionSynchronization() == SYNCHRONIZATION_ALWAYS);
+			//根据指定的参数创建一个新的事务状态对象，并且部分的初始化事务同步
 			return prepareTransactionStatus(
 					definition, null, false, newSynchronization, debugEnabled, suspendedResources);
 		}
 
+		//PROPAGATION_REQUIRES_NEW新建一个事务执行，如果当前有事务，就把当前的事务挂起
 		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRES_NEW) {
 			if (debugEnabled) {
 				logger.debug("Suspending current transaction, creating new transaction with name [" +
 						definition.getName() + "]");
 			}
+			//挂起当前事务，此方法内部后面有分析
 			SuspendedResourcesHolder suspendedResources = suspend(transaction);
 			try {
+				//返回当前事务管理器对线程绑定的事务同步的支持状态
 				boolean newSynchronization = (getTransactionSynchronization() != SYNCHRONIZATION_NEVER);
+				//根据指定的参数创建一个新的事务状态对象，并且部分的初始化事务同步
 				DefaultTransactionStatus status = newTransactionStatus(
 						definition, transaction, true, newSynchronization, debugEnabled, suspendedResources);
+				//此方法交由具体的事务管理器实现
 				doBegin(transaction, definition);
+				//初始化事务同步
 				prepareSynchronization(status, definition);
 				return status;
 			}
+			//doBegin出错，如果内部事务开始出错，恢复外部事务，且恢复外部事务同步
 			catch (RuntimeException beginEx) {
 				resumeAfterBeginException(transaction, suspendedResources, beginEx);
 				throw beginEx;
@@ -467,7 +482,9 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 			}
 		}
 
+		//PROPAGATION_NESTED当前有事务，就新建一个事务，嵌套执行，当前无事务，就新建一个事务执行
 		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NESTED) {
+			//如果事务管理器不允许嵌套事务，就抛出异常
 			if (!isNestedTransactionAllowed()) {
 				throw new NestedTransactionNotSupportedException(
 						"Transaction manager does not allow nested transactions by default - " +
@@ -476,6 +493,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 			if (debugEnabled) {
 				logger.debug("Creating nested transaction with name [" + definition.getName() + "]");
 			}
+			//如果对嵌套事务使用保存点
 			if (useSavepointForNestedTransaction()) {
 				// Create savepoint within existing Spring-managed transaction,
 				// through the SavepointManager API implemented by TransactionStatus.
@@ -526,6 +544,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 根据指定的参数创建一个新的事务状态对象，并且部分的初始化事务同步
 	 * Create a new TransactionStatus for the given arguments,
 	 * also initializing transaction synchronization as appropriate.
 	 * @see #newTransactionStatus
@@ -535,13 +554,16 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 			TransactionDefinition definition, Object transaction, boolean newTransaction,
 			boolean newSynchronization, boolean debug, Object suspendedResources) {
 
+		//创建事务状态对象
 		DefaultTransactionStatus status = newTransactionStatus(
 				definition, transaction, newTransaction, newSynchronization, debug, suspendedResources);
+		//初始化事务同步
 		prepareSynchronization(status, definition);
 		return status;
 	}
 
 	/**
+	 * 根据给定的参数创建一个事务状态对象
 	 * Create a TransactionStatus instance for the given arguments.
 	 */
 	protected DefaultTransactionStatus newTransactionStatus(
@@ -556,6 +578,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 部分初始化事务同步
 	 * Initialize transaction synchronization as appropriate.
 	 */
 	protected void prepareSynchronization(DefaultTransactionStatus status, TransactionDefinition definition) {
@@ -588,7 +611,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 
 
 	/**
-	 * 暂停指定的事务，首先挂起事务同步，然后委托给doSuspend模板方法
+	 * 暂停指定的事务，首先暂停事务同步，然后委托给doSuspend模板方法
 	 * 当事务对象为null,如果当前有活跃的同步，就挂起当前活跃的同步
 	 * Suspend the given transaction. Suspends transaction synchronization first,
 	 * then delegates to the {@code doSuspend} template method.
@@ -693,6 +716,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 内部事务开始失败后恢复外部事务
 	 * Resume outer transaction after inner transaction begin failed.
 	 */
 	private void resumeAfterBeginException(
@@ -700,6 +724,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 
 		String exMessage = "Inner transaction begin exception overridden by outer transaction resume exception";
 		try {
+			//恢复事务，并且恢复事务同步
 			resume(transaction, suspendedResources);
 		}
 		catch (RuntimeException resumeEx) {
@@ -1131,12 +1156,21 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 返回是否对嵌套事务使用保存点
+	 * 默认值是true,这会导致委派给DefaultTransactionStatus创建和hold住一个保存点。
+	 * 如果事务对象没有实现SavepointManager接口，将会抛出NestedTransactionNotSupportedException异常，
+	 * 否则，SavepointManager将会创建一个新的保存点以划分嵌套事务的开始。
+	 *
 	 * Return whether to use a savepoint for a nested transaction.
 	 * <p>Default is {@code true}, which causes delegation to DefaultTransactionStatus
 	 * for creating and holding a savepoint. If the transaction object does not implement
 	 * the SavepointManager interface, a NestedTransactionNotSupportedException will be
 	 * thrown. Else, the SavepointManager will be asked to create a new savepoint to
 	 * demarcate the start of the nested transaction.
+	 *
+	 * 子类可以重写这个方法以返回false,从而可以在已经存在的事务的上下文中进一步调用doBegin方法，
+	 * 这种情况下，doBegin方法需要做相应的处理。
+	 * 例如，这适用于jta
 	 * <p>Subclasses can override this to return {@code false}, causing a further
 	 * call to {@code doBegin} - within the context of an already existing transaction.
 	 * The {@code doBegin} implementation needs to handle this accordingly in such
