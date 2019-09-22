@@ -228,6 +228,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 返回在参与现有事务之前是否应该验证它们。
 	 * Return whether existing transactions should be validated before participating
 	 * in them.
 	 */
@@ -495,22 +496,32 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 			}
 			//如果对嵌套事务使用保存点
 			if (useSavepointForNestedTransaction()) {
+				//通过TransactionStatus实现的SavepointManager的api，在已存在的spring管理的事务中创建一个保存点。
+				//通常使用JDBC3.0的安全点，从不激活spring的同步。
 				// Create savepoint within existing Spring-managed transaction,
 				// through the SavepointManager API implemented by TransactionStatus.
 				// Usually uses JDBC 3.0 savepoints. Never activates Spring synchronization.
+
+				//根据参数准备事务状态对象
 				DefaultTransactionStatus status =
 						prepareTransactionStatus(definition, transaction, false, false, debugEnabled, null);
+				//创建一个保存点保存在事务中
 				status.createAndHoldSavepoint();
 				return status;
 			}
+			//如果不对嵌套事务使用保存点
 			else {
+				//通过嵌套的 begin and commit/rollback 调用进行的嵌套事务
+				//通常仅用于JTA：如果有预先存在的JTA事务，则可以在此处激活Spring同步
 				// Nested transaction through nested begin and commit/rollback calls.
 				// Usually only for JTA: Spring synchronization might get activated here
 				// in case of a pre-existing JTA transaction.
 				boolean newSynchronization = (getTransactionSynchronization() != SYNCHRONIZATION_NEVER);
 				DefaultTransactionStatus status = newTransactionStatus(
 						definition, transaction, true, newSynchronization, debugEnabled, null);
+				//由具体事物管理器实现
 				doBegin(transaction, definition);
+				//初始化事务同步
 				prepareSynchronization(status, definition);
 				return status;
 			}
@@ -520,9 +531,13 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 		if (debugEnabled) {
 			logger.debug("Participating in existing transaction");
 		}
+		//如果当前存在事务
 		if (isValidateExistingTransaction()) {
+			//如果事务定义中隔离级别不是默认的事务隔离级别
 			if (definition.getIsolationLevel() != TransactionDefinition.ISOLATION_DEFAULT) {
+				//从事务同步管理器中获取当前事务的隔离级别
 				Integer currentIsolationLevel = TransactionSynchronizationManager.getCurrentTransactionIsolationLevel();
+				//如果当前事务的隔离级别为null 或者 从事务管理器获取的当前事务的隔离级别和事务定义信息中的隔离级别不相同，会抛出非法事务状态异常
 				if (currentIsolationLevel == null || currentIsolationLevel != definition.getIsolationLevel()) {
 					Constants isoConstants = DefaultTransactionDefinition.constants;
 					throw new IllegalTransactionStateException("Participating transaction with definition [" +
@@ -532,14 +547,18 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 									"(unknown)"));
 				}
 			}
+			//如果事务定义信息中不是只读属性
 			if (!definition.isReadOnly()) {
+				//但是事务管理器获取的只读的，会抛出非法事务状态异常
 				if (TransactionSynchronizationManager.isCurrentTransactionReadOnly()) {
 					throw new IllegalTransactionStateException("Participating transaction with definition [" +
 							definition + "] is not marked as read-only but existing transaction is");
 				}
 			}
 		}
+		//getTransactionSynchronization()方法返回此事务管理器是否应当激活线程绑定的事务同步支持
 		boolean newSynchronization = (getTransactionSynchronization() != SYNCHRONIZATION_NEVER);
+		//根据指定的参数创建一个新的事务状态对象，并且部分的初始化事务同步
 		return prepareTransactionStatus(definition, transaction, false, newSynchronization, debugEnabled, null);
 	}
 
