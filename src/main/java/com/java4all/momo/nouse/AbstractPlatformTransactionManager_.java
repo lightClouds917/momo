@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.java4all.momo.nouse;
+package com.runlion.fsp.credit.util;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -471,7 +471,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 			if (!isNestedTransactionAllowed()) {
 				throw new NestedTransactionNotSupportedException(
 						"Transaction manager does not allow nested transactions by default - " +
-						"specify 'nestedTransactionAllowed' property with value 'true'");
+								"specify 'nestedTransactionAllowed' property with value 'true'");
 			}
 			if (debugEnabled) {
 				logger.debug("Creating nested transaction with name [" + definition.getName() + "]");
@@ -653,9 +653,12 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 恢复执行的事务，先委派给doResume处理，然后恢复事务同步
 	 * Resume the given transaction. Delegates to the {@code doResume}
 	 * template method first, then resuming transaction synchronization.
+	 * 当前事务对象
 	 * @param transaction the current transaction object
+	 * 由suspend方法返回的持有暂挂资源的对象，或者为null，如果有需要，用此对象恢复同步
 	 * @param resourcesHolder the object that holds suspended resources,
 	 * as returned by {@code suspend} (or {@code null} to just
 	 * resume synchronizations, if any)
@@ -665,17 +668,25 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	protected final void resume(Object transaction, SuspendedResourcesHolder resourcesHolder)
 			throws TransactionException {
 
+		//如果持有暂挂资源的对象不为null
 		if (resourcesHolder != null) {
+			//获取暂挂资源
 			Object suspendedResources = resourcesHolder.suspendedResources;
 			if (suspendedResources != null) {
+				//如果暂挂资源不为null,用事务对象和暂挂资源信息去恢复资源，恢复同步
 				doResume(transaction, suspendedResources);
 			}
+			//获取暂停的同步
 			List<TransactionSynchronization> suspendedSynchronizations = resourcesHolder.suspendedSynchronizations;
+			//如果暂停的同步列表不为null
 			if (suspendedSynchronizations != null) {
+				//重置同步信息
+				//TODO
 				TransactionSynchronizationManager.setActualTransactionActive(resourcesHolder.wasActive);
 				TransactionSynchronizationManager.setCurrentTransactionIsolationLevel(resourcesHolder.isolationLevel);
 				TransactionSynchronizationManager.setCurrentTransactionReadOnly(resourcesHolder.readOnly);
 				TransactionSynchronizationManager.setCurrentTransactionName(resourcesHolder.name);
+				//重新激活当前线程的事务同步，并且恢复所有指定的同步
 				doResumeSynchronization(suspendedSynchronizations);
 			}
 		}
@@ -722,6 +733,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 重新激活当前线程的事务同步，并且恢复所有指定的同步
 	 * Reactivate transaction synchronization for the current thread
 	 * and resume all given synchronizations.
 	 * @param suspendedSynchronizations List of TransactionSynchronization objects
@@ -1180,7 +1192,9 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	}
 
 	/**
+	 * 恢复当前事务的资源
 	 * Resume the resources of the current transaction.
+	 * 随后事务同步也会恢复
 	 * Transaction synchronization will be resumed afterwards.
 	 * <p>The default implementation throws a TransactionSuspensionNotSupportedException,
 	 * assuming that transaction suspension is generally not supported.
@@ -1277,7 +1291,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 	protected void doSetRollbackOnly(DefaultTransactionStatus status) throws TransactionException {
 		throw new IllegalTransactionStateException(
 				"Participating in existing transactions is not supported - when 'isExistingTransaction' " +
-				"returns true, appropriate 'doSetRollbackOnly' behavior must be provided");
+						"returns true, appropriate 'doSetRollbackOnly' behavior must be provided");
 	}
 
 	/**
@@ -1328,6 +1342,7 @@ public abstract class AbstractPlatformTransactionManager_ implements PlatformTra
 
 
 	/**
+	 * 暂挂资源的持有者
 	 * Holder for suspended resources.
 	 * Used internally by {@code suspend} and {@code resume}.
 	 */
