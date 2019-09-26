@@ -1,5 +1,6 @@
 package com.java4all.momo.tm;
 
+import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import com.java4all.momo.constant.GlobalStatus;
 import com.java4all.momo.exception.RemoteCallExcaption;
 import com.java4all.momo.netty.TmRpcClient;
@@ -13,6 +14,8 @@ import com.java4all.momo.responce.global.GlobalCommitResponse;
 import com.java4all.momo.responce.global.GlobalRollbackResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default transaction manager
@@ -20,6 +23,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class DefaultTransactionManager extends ChannelInboundHandlerAdapter implements TransactionManager  {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            DefaultTransactionManager.class);
     /**
      * begin a new global transaction
      *
@@ -34,7 +39,15 @@ public class DefaultTransactionManager extends ChannelInboundHandlerAdapter impl
         GlobalBeginRequest request = new GlobalBeginRequest();
         request.setTransactionName(name);
         request.setTimeout(timeout);
-        GlobalBeginResponse response = (GlobalBeginResponse) TmRpcClient.syncCall(request);
+        GlobalBeginResponse response;
+
+        try {
+            response = (GlobalBeginResponse) TmRpcClient.syncCall(request);
+        }catch (Exception ex){
+            String info = "global transaction begin failed";
+            LOGGER.info("{}",info,ex);
+            throw new RemoteCallExcaption(info);
+        }
         String xid = response.getXid();
         return xid;
     }
@@ -49,8 +62,14 @@ public class DefaultTransactionManager extends ChannelInboundHandlerAdapter impl
     public GlobalStatus commit(String xid) {
         GlobalCommitRequest request = new GlobalCommitRequest();
         request.setXid(xid);
-        GlobalCommitResponse response = (GlobalCommitResponse) TmRpcClient
-                .syncCall(request);
+        GlobalCommitResponse response;
+        try {
+            response = (GlobalCommitResponse) TmRpcClient.syncCall(request);
+        }catch (Exception ex){
+            String info = "global transaction commit failed";
+            LOGGER.info("{},xid = {}",info,xid,ex);
+            throw new RemoteCallExcaption(info+" xid = "+xid);
+        }
 
         return null;
     }
