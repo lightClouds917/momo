@@ -70,6 +70,8 @@ public class DefaultTransactionManager extends ChannelInboundHandlerAdapter impl
             LOGGER.info("{},xid = {}",info,xid,ex);
             throw new RemoteCallExcaption(info+" xid = "+xid);
         }
+        String resultCode = response.getResultCode();
+        //TODO
 
         return null;
     }

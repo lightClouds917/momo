@@ -8,4 +8,6 @@ import com.java4all.momo.responce.AbstractTransactionResponse;
  */
 public class GlobalCommitResponse extends AbstractTransactionResponse{
 
+    //TODO
+
 }
