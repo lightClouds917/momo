@@ -68,7 +68,13 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
      */
     @Override
     public BranchReportResponse doBranchReport(BranchReportRequest request) {
-        return null;
+        String xid = request.getXid();
+        String resourceId = request.getResourceId();
+
+        BranchReportResponse reportResponse = new BranchReportResponse();
+        reportResponse.setXid(xid);
+        reportResponse.setResourceId(resourceId);
+        return reportResponse;
     }
 
     /**
