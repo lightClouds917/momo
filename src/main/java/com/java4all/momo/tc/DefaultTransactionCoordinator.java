@@ -14,12 +14,17 @@ import com.java4all.momo.responce.global.GlobalCommitResponse;
 import com.java4all.momo.responce.global.GlobalRollbackResponse;
 import com.java4all.momo.session.BranchReportRequest;
 import com.java4all.momo.session.BranchReportResponse;
+import org.springframework.core.NamedThreadLocal;
 
 /**
  * @author IT云清
  */
 public class DefaultTransactionCoordinator implements TransactionCoordinator{
 
+
+    private static final ThreadLocal local1 = new NamedThreadLocal("branch-");
+
+    //TODO we need return abstract object ,wait abstract
     /**
      * do global begin
      */
@@ -49,7 +54,13 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
      */
     @Override
     public BranchRegistResponse doBranchRegist(BranchRegistRequest request) {
-        return null;
+        String xid = request.getXid();
+        String resourceId = request.getResourceId();
+
+        BranchRegistResponse registResponse = new BranchRegistResponse();
+
+
+        return registResponse;
     }
 
     /**
