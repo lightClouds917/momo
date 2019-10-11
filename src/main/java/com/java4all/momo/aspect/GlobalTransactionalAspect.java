@@ -133,11 +133,11 @@ public class GlobalTransactionalAspect implements Ordered{
 
     /**
      * 本地事务和全局事务优先级区分
+     * 优先级最高
      * @return
      */
     @Override
     public int getOrder() {
-        //TODO 大还是小
-        return 10000;
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }
