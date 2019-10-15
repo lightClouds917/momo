@@ -82,6 +82,10 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
      */
     @Override
     public BranchCommitResponse doBranchCommit(BranchCommitRequest request) {
+        String xid = request.getXid();
+        long branchId = request.getBranchId();
+        //TODO 向分支事务发送提交请求
+
         return null;
     }
 
