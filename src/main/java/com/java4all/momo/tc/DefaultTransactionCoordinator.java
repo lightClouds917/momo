@@ -1,5 +1,6 @@
 package com.java4all.momo.tc;
 
+import com.java4all.momo.exception.GlobalTransactionException;
 import com.java4all.momo.request.branch.BranchCommitRequest;
 import com.java4all.momo.request.branch.BranchRegistRequest;
 import com.java4all.momo.request.branch.BranchRollbackRequest;
@@ -14,6 +15,9 @@ import com.java4all.momo.responce.global.GlobalCommitResponse;
 import com.java4all.momo.responce.global.GlobalRollbackResponse;
 import com.java4all.momo.session.BranchReportRequest;
 import com.java4all.momo.session.BranchReportResponse;
+import com.java4all.momo.session.GlobalSession;
+import com.java4all.momo.session.SessionHolder;
+import javax.websocket.Session;
 import org.springframework.core.NamedThreadLocal;
 
 /**
@@ -56,11 +60,14 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
     public BranchRegistResponse doBranchRegist(BranchRegistRequest request) {
         String xid = request.getXid();
         String resourceId = request.getResourceId();
+        boolean exist = this.assertGlobalSessionNotNull(xid);
+        if(exist){
+            BranchRegistResponse registResponse = new BranchRegistResponse();
+            return registResponse;
+        }else {
+            throw new GlobalTransactionException("has no global transaction,branch regist failed");
+        }
 
-        BranchRegistResponse registResponse = new BranchRegistResponse();
-
-
-        return registResponse;
     }
 
     /**
@@ -95,5 +102,11 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
     @Override
     public BranchRollbackResponse doBranchRollback(BranchRollbackRequest request) {
         return null;
+    }
+
+
+    private boolean assertGlobalSessionNotNull(String xid){
+        GlobalSession globalSession = SessionHolder.findGlobalSession(xid);
+        return null == globalSession ? false : true;
     }
 }

@@ -18,4 +18,5 @@ public class GlobalSession {
 
     //ceshi
 
+    //TODO 什么时候初始化
 }
