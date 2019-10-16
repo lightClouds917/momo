@@ -1,6 +1,7 @@
 package com.java4all.momo.tc;
 
 import com.java4all.momo.exception.GlobalTransactionException;
+import com.java4all.momo.netty.TmRpcClient;
 import com.java4all.momo.request.branch.BranchCommitRequest;
 import com.java4all.momo.request.branch.BranchRegistRequest;
 import com.java4all.momo.request.branch.BranchRollbackRequest;
@@ -62,8 +63,9 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
         String resourceId = request.getResourceId();
         boolean exist = this.assertGlobalSessionNotNull(xid);
         if(exist){
-            BranchRegistResponse registResponse = new BranchRegistResponse();
-            return registResponse;
+            BranchRegistResponse branchRegistResponse
+                    = (BranchRegistResponse) TmRpcClient.syncCall(request);
+            return branchRegistResponse;
         }else {
             throw new GlobalTransactionException("has no global transaction,branch regist failed");
         }
