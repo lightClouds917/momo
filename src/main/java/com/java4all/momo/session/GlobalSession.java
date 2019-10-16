@@ -1,5 +1,7 @@
 package com.java4all.momo.session;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +14,43 @@ public class GlobalSession {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalSession.class);
 
+    /**global session id*/
     private String xid;
 
-    private long transactionId;
+    private String transactionName;
+
+    private String transactionServiceGroup;
+
+    private long timeOut;
+
+    private List<BranchSession> branchSessions = new ArrayList<>();
+
+    public GlobalSession(String xid, String transactionName, String transactionServiceGroup,
+            long timeOut) {
+        this.xid = xid;
+        this.transactionName = transactionName;
+        this.transactionServiceGroup = transactionServiceGroup;
+        this.timeOut = timeOut;
+    }
+
+    public void addBranch(BranchSession branchSession){
+        branchSessions.add(branchSession);
+    }
+
+    public void removeBranch(BranchSession branchSession){
+        branchSessions.remove(branchSession);
+    }
+
 
     //ceshi
 
     //TODO 什么时候初始化
+
+    public static void init(){
+
+    }
+
+    public List<BranchSession> getBranchSessionList(String xid){
+        return branchSessions;
+    }
 }

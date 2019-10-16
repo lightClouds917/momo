@@ -7,5 +7,14 @@ import com.java4all.momo.responce.AbstractTransactionResponse;
  */
 public class BranchRegistResponse extends AbstractTransactionResponse{
 
-//TODO
+    private long branchId;
+
+    public long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(long branchId) {
+        this.branchId = branchId;
+    }
+
 }
