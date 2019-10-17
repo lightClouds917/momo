@@ -19,3 +19,5 @@ pinpoint:https://www.cnblogs.com/yyhh/p/6106472.html
 AbstractPlatformTransactionManager 源码解析 https://blog.csdn.net/qq_33221085/article/details/84952146
 
 spring事务源码 https://my.oschina.net/u/3775437/blog/1841906
+
+seata源码分析 https://toutiao.io/posts/g6jmss/preview   https://www.cnblogs.com/smileIce/p/11200829.html
