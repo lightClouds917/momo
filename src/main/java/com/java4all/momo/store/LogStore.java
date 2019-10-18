@@ -1,22 +1,34 @@
 package com.java4all.momo.store;
 
+import com.java4all.momo.Entity.BranchTransactionDo;
+import com.java4all.momo.Entity.GlobalTransactionDo;
+import java.util.List;
+
 /**
  * log store operate
- * @author wangzhongxiang
+ * @author ITyunqing
  * @date 2019年10月18日 09:47:42
  */
 public interface LogStore {
 
-    void insertGlobalTransactionDo();
+    GlobalTransactionDo queryGlobalTransactionDo(String xid);
 
-    void deleteGlobalTransactionDo();
+    List<GlobalTransactionDo> queryGlobalTransactionDo(int[] status);
 
-    void updateGlobalTransactionDo();
+    boolean insertGlobalTransactionDo(GlobalTransactionDo globalTransactionDo);
 
-    void insertBranchTransactionDo();
+    boolean deleteGlobalTransactionDo(GlobalTransactionDo globalTransactionDo);
 
-    void deleteBranchTransactionDo();
+    boolean updateGlobalTransactionDo(GlobalTransactionDo globalTransactionDo);
 
-    void updateBranchTransactionDo();
+    BranchTransactionDo queryBranchTransactionDo(String xid);
+
+    List<BranchTransactionDo> queryBranchTransactionDo(int[] status);
+
+    boolean insertBranchTransactionDo(BranchTransactionDo branchTransactionDo);
+
+    boolean deleteBranchTransactionDo(BranchTransactionDo branchTransactionDo);
+
+    boolean updateBranchTransactionDo(BranchTransactionDo branchTransactionDo);
 
 }

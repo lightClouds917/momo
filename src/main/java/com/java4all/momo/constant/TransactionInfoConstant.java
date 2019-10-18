@@ -1,7 +1,7 @@
 package com.java4all.momo.constant;
 
 /**
- * @author wangzhongxiang
+ * @author ITyunqing
  * @date 2019年09月08日 22:44:13
  */
 public class TransactionInfoConstant {

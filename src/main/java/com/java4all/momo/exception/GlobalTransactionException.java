@@ -1,7 +1,7 @@
 package com.java4all.momo.exception;
 
 /**
- * @author wangzhongxiang
+ * @author ITyunqing
  * @date 2019年10月16日 20:07:12
  */
 public class GlobalTransactionException extends RuntimeException{
