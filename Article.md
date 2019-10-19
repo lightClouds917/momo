@@ -27,3 +27,6 @@ MySQL的SELECT ...for update https://www.cnblogs.com/wxgblogs/p/6849064.html
 MySQL行锁 https://www.cnblogs.com/chenqionghe/p/4845693.html
 
 java 泛型详解-绝对是对泛型方法讲解最详细的，没有之一 https://blog.csdn.net/s10461/article/details/53941091
+
+seata官方0.9配置 https://github.com/seata/awesome-seata/pull/53/files
+seataAT分析 https://github.com/seata/seata/wiki/AT-Mode
