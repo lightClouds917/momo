@@ -25,3 +25,5 @@ seata源码分析 https://toutiao.io/posts/g6jmss/preview   https://www.cnblogs.
 MySQL的SELECT ...for update https://www.cnblogs.com/wxgblogs/p/6849064.html
 
 MySQL行锁 https://www.cnblogs.com/chenqionghe/p/4845693.html
+
+java 泛型详解-绝对是对泛型方法讲解最详细的，没有之一 https://blog.csdn.net/s10461/article/details/53941091
