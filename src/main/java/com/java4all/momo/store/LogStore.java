@@ -5,7 +5,7 @@ import com.java4all.momo.entity.GlobalTransactionDo;
 import java.util.List;
 
 /**
- * log store operate
+ * log store operate , store data facilitates transaction rollback.
  * @author ITyunqing
  * @date 2019年10月18日 09:47:42
  */

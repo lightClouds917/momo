@@ -2,6 +2,7 @@ package com.java4all.momo.tc;
 
 import com.java4all.momo.constant.BranchStatus;
 import com.java4all.momo.entity.BranchTransactionDo;
+import com.java4all.momo.exception.BranchTransactionException;
 import com.java4all.momo.exception.GlobalTransactionException;
 import com.java4all.momo.netty.TmRpcClient;
 import com.java4all.momo.request.branch.BranchCommitRequest;
@@ -21,8 +22,11 @@ import com.java4all.momo.session.BranchReportResponse;
 import com.java4all.momo.session.BranchSession;
 import com.java4all.momo.session.GlobalSession;
 import com.java4all.momo.session.SessionHolder;
+import com.java4all.momo.store.MysqlLogStoreDao;
+import com.java4all.momo.util.UUIDGenerator;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.websocket.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NamedThreadLocal;
 
 /**
@@ -34,6 +38,10 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
     private static final ThreadLocal local1 = new NamedThreadLocal("branch-");
     private static ConcurrentHashMap<String,BranchSession> branchSessionMap = new ConcurrentHashMap();
     private static ConcurrentHashMap<GlobalSession,BranchSession> sessionMap = new ConcurrentHashMap();
+
+
+    @Autowired
+    private MysqlLogStoreDao mysqlLogStoreDao;
 
     //TODO we need return abstract object ,wait abstract
     /**
@@ -66,9 +74,11 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
     @Override
     public BranchRegistResponse doBranchRegist(BranchRegistRequest request) {
         String xid = request.getXid();
+        long branchId = UUIDGenerator.generateUUID();
 
         BranchSession branchSession = new BranchSession();
         branchSession.setXid(xid);
+        branchSession.setBranchId(branchId);
         branchSession.setResourceId(request.getResourceId());
         branchSession.setBranchStatus(BranchStatus.Registered);
 
@@ -77,13 +87,18 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
             throw new GlobalTransactionException("has no global transaction,branch regist failed");
         }
         BranchRegistResponse branchRegistResponse;
+        BranchTransactionDo branchTransactionDo = new BranchTransactionDo();
         try {
             branchRegistResponse = (BranchRegistResponse) TmRpcClient.syncCall(request);
             branchSessionMap.put(xid,branchSession);
-
+            branchTransactionDo.setXid(xid);
+            branchTransactionDo.setBranchId(branchId);
+            branchTransactionDo.setBranchStatus(BranchStatus.Registered);
+            branchTransactionDo.setResourceId(request.getResourceId());
+            mysqlLogStoreDao.insertBranchTransactionDo(branchTransactionDo);
             return branchRegistResponse;
         }catch (Exception ex){
-
+            throw new BranchTransactionException("branch regist failed");
         }
     }
 
