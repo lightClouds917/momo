@@ -1,7 +1,7 @@
 package com.java4all.momo.store;
 
-import com.java4all.momo.Entity.BranchTransactionDo;
-import com.java4all.momo.Entity.GlobalTransactionDo;
+import com.java4all.momo.entity.BranchTransactionDo;
+import com.java4all.momo.entity.GlobalTransactionDo;
 import java.util.List;
 
 /**
