@@ -30,3 +30,5 @@ java 泛型详解-绝对是对泛型方法讲解最详细的，没有之一 http
 
 seata官方0.9配置 https://github.com/seata/awesome-seata/pull/53/files
 seataAT分析 https://github.com/seata/seata/wiki/AT-Mode
+
+阿里巴巴DTS文档 https://tech.antfin.com/docs/2/46886
