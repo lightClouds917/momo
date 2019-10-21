@@ -4,6 +4,7 @@ import com.java4all.momo.constant.BranchStatus;
 import com.java4all.momo.entity.BranchTransactionDo;
 import com.java4all.momo.exception.BranchTransactionException;
 import com.java4all.momo.exception.GlobalTransactionException;
+import com.java4all.momo.exception.NeverHappenExcetion;
 import com.java4all.momo.netty.TmRpcClient;
 import com.java4all.momo.request.branch.BranchCommitRequest;
 import com.java4all.momo.request.branch.BranchRegistRequest;
@@ -24,10 +25,14 @@ import com.java4all.momo.session.GlobalSession;
 import com.java4all.momo.session.SessionHolder;
 import com.java4all.momo.store.MysqlLogStoreDao;
 import com.java4all.momo.util.UUIDGenerator;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import javax.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NamedThreadLocal;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author IT云清
@@ -36,7 +41,7 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
 
 
     private static final ThreadLocal local1 = new NamedThreadLocal("branch-");
-    private static ConcurrentHashMap<String,BranchSession> branchSessionMap = new ConcurrentHashMap();
+    private static ConcurrentHashMap<String,List<BranchSession>> branchSessionMap = new ConcurrentHashMap();
     private static ConcurrentHashMap<GlobalSession,BranchSession> sessionMap = new ConcurrentHashMap();
 
 
@@ -81,6 +86,12 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
         branchSession.setBranchId(branchId);
         branchSession.setResourceId(request.getResourceId());
         branchSession.setBranchStatus(BranchStatus.Registered);
+        List<BranchSession> branchSessions = branchSessionMap.get(xid);
+        if(CollectionUtils.isEmpty(branchSessions)){
+            branchSessionMap.put(xid, Arrays.asList(branchSession));
+        }else {
+            branchSessions.add(branchSession);
+        }
 
         boolean exist = this.assertGlobalSessionNotNull(xid);
         if (!exist) {
@@ -90,7 +101,6 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
         BranchTransactionDo branchTransactionDo = new BranchTransactionDo();
         try {
             branchRegistResponse = (BranchRegistResponse) TmRpcClient.syncCall(request);
-            branchSessionMap.put(xid,branchSession);
             branchTransactionDo.setXid(xid);
             branchTransactionDo.setBranchId(branchId);
             branchTransactionDo.setBranchStatus(BranchStatus.Registered);
@@ -123,6 +133,30 @@ public class DefaultTransactionCoordinator implements TransactionCoordinator{
     public BranchCommitResponse doBranchCommit(BranchCommitRequest request) {
         String xid = request.getXid();
         long branchId = request.getBranchId();
+
+        List<BranchSession> branchSessions = branchSessionMap.get(xid);
+        if(CollectionUtils.isEmpty(branchSessions)){
+            throw new NeverHappenExcetion(String.format("branch transaction not exist,xid = s% ",xid));
+        }
+        List<BranchSession> collect = branchSessions.stream()
+                .filter(branchSession -> branchSession.getBranchId() == branchId).collect(
+                        Collectors.toList());
+        if(CollectionUtils.isEmpty(collect)){
+            throw new NeverHappenExcetion(String.format("branch transaction not exist,xid = s% ,branchId = s%",xid,branchId));
+        }
+
+        BranchSession branchSession = collect.get(0);
+        branchSession.setBranchStatus(BranchStatus.PhaseOne_Done);
+
+        //TODO 替换修改该branchSession 状态
+
+
+        BranchCommitResponse branchCommitResponse ;
+        try {
+            branchCommitResponse = (BranchCommitResponse) TmRpcClient.syncCall(request);
+        }catch (Exception ex){
+            throw new BranchTransactionException("branch commited failed");
+        }
         //TODO 向分支事务发送提交请求
 
         return null;
