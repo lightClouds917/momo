@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class TransactionalTemplate {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionalTemplate.class);
 
-    public Object execute()throws Throwable{
+    public Object execute(TransactionalExecutor executor)throws Throwable{
 
         //TODO
         return null;

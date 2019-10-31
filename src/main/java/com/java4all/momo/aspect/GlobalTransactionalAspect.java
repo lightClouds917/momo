@@ -5,12 +5,15 @@ import static com.java4all.momo.constant.TransactionInfoConstant.EMPTY_STRING;
 import static com.java4all.momo.constant.TransactionInfoConstant.SEMICOLON_SPLIT;
 
 import com.java4all.momo.annotation.GlobalTransactional;
+import com.java4all.momo.core.TransactionalExecutor;
+import com.java4all.momo.core.TransactionalTemplate;
 import com.java4all.momo.request.branch.BranchRegistRequest;
 import com.java4all.momo.request.global.GlobalBeginRequest;
 import com.java4all.momo.util.UUIDGenerator;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -32,12 +35,14 @@ import org.springframework.stereotype.Component;
 public class GlobalTransactionalAspect implements Ordered{
     private static final Logger LOGGER = LoggerFactory.getLogger(
             GlobalTransactionalAspect.class);
+    private final TransactionalTemplate template = new TransactionalTemplate();
+
 
     @Pointcut("@annotation(com.java4all.momo.annotation.GlobalTransactional)")
     public void pointCut(){}
 
     @Before("pointCut()")
-    public void beforeExecute(JoinPoint joinPoint){
+    public void beforeExecute(ProceedingJoinPoint joinPoint){
 
         boolean isStart = this.isStart(joinPoint);
 
@@ -73,6 +78,15 @@ public class GlobalTransactionalAspect implements Ordered{
         //wait .......
         //判断所有分支事务的状态
         //提交/回滚
+    }
+
+    private Object handleGlobalTransaction(ProceedingJoinPoint joinPoint) throws Throwable {
+        return template.execute(new TransactionalExecutor() {
+            @Override
+            public Object execute() throws Throwable {
+                return joinPoint.proceed();
+            }
+        });
     }
 
     @AfterReturning("pointCut()")
