@@ -46,6 +46,7 @@ public class GlobalTransactionalAspect implements Ordered{
 
         boolean isStart = this.isStart(joinPoint);
 
+
         //判断是否是事务发起方
         if(isStart){
             //创建全局事务

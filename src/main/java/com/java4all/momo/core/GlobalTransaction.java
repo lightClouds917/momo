@@ -5,38 +5,10 @@ package com.java4all.momo.core;
  */
 public class GlobalTransaction {
 
-    /**
-     * 事务组
-     */
-    public String groupId;
-
-    /**
-     * 全局事务id
-     */
-    public String xid;
-
-    /**
-     * 全局事务状态
-     */
-    public int statu;
 
 
 
 
 
-    public String getXid() {
-        return xid;
-    }
 
-    public void setXid(String xid) {
-        this.xid = xid;
-    }
-
-    public int getStatu() {
-        return statu;
-    }
-
-    public void setStatu(int statu) {
-        this.statu = statu;
-    }
 }
