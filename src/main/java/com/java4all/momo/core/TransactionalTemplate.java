@@ -12,7 +12,8 @@ public class TransactionalTemplate {
 
     public Object execute(TransactionalExecutor executor)throws Throwable{
         GlobalTransaction tx = GlobalTransactionContext.getCurrentOrNew();
-        
+
+
 
         //TODO
         return null;

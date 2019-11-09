@@ -2,6 +2,7 @@ package com.java4all.momo.core;
 
 
 import com.java4all.momo.constant.GlobalStatus;
+import com.java4all.momo.constant.StoreMode;
 
 /**
  * @author IT云清
@@ -13,6 +14,8 @@ public class DefaultGlobalTransaction extends GlobalTransaction{
     private String groupId;
 
     private String xid;
+
+    private StoreMode storeMode = StoreMode.MEMORY;
 
     /**global transaction role*/
     private GlobalTransactionRole globalTransactionRole;
@@ -26,9 +29,11 @@ public class DefaultGlobalTransaction extends GlobalTransaction{
 
     public DefaultGlobalTransaction(String xid,
             GlobalTransactionRole globalTransactionRole,
-            GlobalStatus globalStatus) {
+            GlobalStatus globalStatus,
+            StoreMode storeMode) {
         this.xid = xid;
         this.globalTransactionRole = globalTransactionRole;
         this.globalStatus = globalStatus;
+        this.storeMode = storeMode;
     }
 }
