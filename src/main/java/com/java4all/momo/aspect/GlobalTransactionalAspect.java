@@ -46,14 +46,13 @@ public class GlobalTransactionalAspect implements Ordered{
 
         boolean isStart = this.isStart(joinPoint);
 
-
         //判断是否是事务发起方
         if(isStart){
             //创建全局事务
             StringBuffer sb = new StringBuffer();
             //TODO 怎么生成和获取
             String groupId = "11111";
-            String xid = new StringBuffer()
+            String xid = sb
                     .append(groupId)
                     .append(SEMICOLON_SPLIT)
                     .append(LocalDate.now().toString())

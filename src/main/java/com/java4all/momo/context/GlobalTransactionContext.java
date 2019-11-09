@@ -1,6 +1,7 @@
 package com.java4all.momo.context;
 
 import com.java4all.momo.constant.GlobalStatus;
+import com.java4all.momo.constant.StoreMode;
 import com.java4all.momo.core.DefaultGlobalTransaction;
 import com.java4all.momo.core.GlobalTransaction;
 import com.java4all.momo.core.GlobalTransactionRole;
@@ -27,6 +28,7 @@ public class GlobalTransactionContext {
         if(xid == null){
             return null;
         }
-        return new DefaultGlobalTransaction(xid, GlobalTransactionRole.Participant,GlobalStatus.Begin);
+        return new DefaultGlobalTransaction(xid, GlobalTransactionRole.Participant,GlobalStatus.Begin,
+                StoreMode.MEMORY);
     }
 }
