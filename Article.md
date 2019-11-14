@@ -39,3 +39,5 @@ lcn框架原理 https://blog.csdn.net/gududedabai/article/details/83012487
 lcn框架原理 https://blog.csdn.net/qq_28341873/article/details/79789054
 
 easyTransaction https://github.com/QNJR-GROUP/EasyTransaction
+
+Transactional rollbackFor属性 https://www.cnblogs.com/clwydjgs/p/9317849.html

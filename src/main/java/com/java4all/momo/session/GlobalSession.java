@@ -2,6 +2,7 @@ package com.java4all.momo.session;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,17 @@ import org.slf4j.LoggerFactory;
 public class GlobalSession {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalSession.class);
+
+    /**
+     * dbUrl
+     *  table
+     *     pk
+     * */
+    private static final
+    ConcurrentHashMap<String,
+            ConcurrentHashMap<String,
+                    ConcurrentHashMap<String,
+                            ConcurrentHashMap<String,Long>>>> map = new ConcurrentHashMap<>();
 
     /**global session id*/
     private String xid;
