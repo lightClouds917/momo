@@ -10,6 +10,7 @@ import org.springframework.http.client.support.HttpRequestWrapper;
 import org.springframework.util.StringUtils;
 
 /**
+ * Wrapper the client http request interceptor to add xid to the headers
  * @author ITyunqing
  * @date 2019年11月28日 20:05:57
  */

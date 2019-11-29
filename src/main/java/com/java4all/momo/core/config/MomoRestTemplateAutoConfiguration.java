@@ -19,5 +19,6 @@ public class MomoRestTemplateAutoConfiguration {
     private MomoProperties momoProperties;
 
     public MomoRestTemplateAutoConfiguration() {
+
     }
 }
