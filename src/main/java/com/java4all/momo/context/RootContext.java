@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 public class RootContext {
     private static final Logger LOGGER = LoggerFactory.getLogger(RootContext.class);
 
-    private static final String KEY_XID = "TX_XID";
-    private static final String KEY_GLOBAL_LOCK_KEY = "TX_LOCK";
-    private static ContextCore CONTEXT_HOLDER = ContextCoreLoader.load();
+    public static final String KEY_XID = "TX_XID";
+    public static final String KEY_GLOBAL_LOCK_KEY = "TX_LOCK";
+    public static ContextCore CONTEXT_HOLDER = ContextCoreLoader.load();
 
     /**
      * get xid
