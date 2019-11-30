@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+@Deprecated
 public class GlobalTransactionalAspect implements Ordered{
     private static final Logger LOGGER = LoggerFactory.getLogger(
             GlobalTransactionalAspect.class);
