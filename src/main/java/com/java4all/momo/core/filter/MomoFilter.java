@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.util.StringUtils;
 
 /**
- *
+ * If the xid is not null from the request header ,means the applicaiton is
+ * in the global transaction,we need to bind the xid to the runtime.
  * @author ITyunqing
  * @date 2019年11月29日 22:02:08
  */
