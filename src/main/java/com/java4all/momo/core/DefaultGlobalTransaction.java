@@ -25,9 +25,9 @@ public class DefaultGlobalTransaction extends GlobalTransaction{
             GlobalTransactionRole globalTransactionRole,
             GlobalStatus globalStatus,
             StoreMode storeMode) {
-        this.xid = xid;
+        this.setXid(xid);
         this.globalTransactionRole = globalTransactionRole;
         this.globalStatus = globalStatus;
-        this.storeMode = storeMode;
+        this.setStoreMode(storeMode);
     }
 }
