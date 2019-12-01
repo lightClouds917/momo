@@ -11,12 +11,6 @@ import com.java4all.momo.constant.StoreMode;
 public class DefaultGlobalTransaction extends GlobalTransaction{
     private static final int DEFAULT_GLOBAL_TX_TIMEOUT = 60000;
 
-    private String groupId;
-
-    private String xid;
-
-    private StoreMode storeMode = StoreMode.MEMORY;
-
     /**global transaction role*/
     private GlobalTransactionRole globalTransactionRole;
 
