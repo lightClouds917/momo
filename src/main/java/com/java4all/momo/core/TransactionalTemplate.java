@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class TransactionalTemplate {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionalTemplate.class);
 
-    public Object execute(TransactionalExecutor executor)throws Throwable{
+    public Object execute(TransactionalExecutor business)throws Throwable{
         GlobalTransaction tx = GlobalTransactionContext.getCurrentOrNew();
 
 
