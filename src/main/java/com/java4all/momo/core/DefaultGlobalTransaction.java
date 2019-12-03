@@ -8,7 +8,7 @@ import com.java4all.momo.constant.StoreMode;
  * @author IT云清
  * @date 2019年10月31日 21:26:25
  */
-public class DefaultGlobalTransaction{
+public class DefaultGlobalTransaction implements GlobalTransaction{
     private static final int DEFAULT_GLOBAL_TX_TIMEOUT = 60000;
 
     private String xid;
@@ -29,14 +29,21 @@ public class DefaultGlobalTransaction{
     public DefaultGlobalTransaction() {
     }
 
-    public DefaultGlobalTransaction(String xid, String txServiceGroup, String groupId,
-            StoreMode storeMode, GlobalTransactionRole globalTransactionRole,
-            GlobalStatus globalStatus) {
+    public DefaultGlobalTransaction(String xid, GlobalTransactionRole globalTransactionRole,
+            GlobalStatus globalStatus,StoreMode storeMode) {
         this.xid = xid;
-        this.txServiceGroup = txServiceGroup;
-        this.groupId = groupId;
-        this.storeMode = storeMode;
         this.globalTransactionRole = globalTransactionRole;
         this.globalStatus = globalStatus;
+        this.storeMode = storeMode;
+    }
+
+    @Override
+    public void begin(int timeout) {
+
+    }
+
+    @Override
+    public void begin(int timeout, String name) {
+
     }
 }

@@ -35,6 +35,7 @@ public class TransactionalTemplate {
     }
 
     private void beginTransaction(GlobalTransaction tx, TransactionInfo transactionInfo) {
+        tx.begin(transactionInfo.getTimeOut(),transactionInfo.getName());
 
     }
 

@@ -7,6 +7,7 @@ import static com.java4all.momo.constant.TransactionInfoConstant.SEMICOLON_SPLIT
 import com.java4all.momo.annotation.GlobalTransactional;
 import com.java4all.momo.core.TransactionalExecutor;
 import com.java4all.momo.core.TransactionalTemplate;
+import com.java4all.momo.entity.TransactionInfo;
 import com.java4all.momo.request.branch.BranchRegistRequest;
 import com.java4all.momo.request.global.GlobalBeginRequest;
 import com.java4all.momo.util.UUIDGenerator;
@@ -83,9 +84,15 @@ public class GlobalTransactionalAspect implements Ordered{
 
     private Object handleGlobalTransaction(ProceedingJoinPoint joinPoint) throws Throwable {
         return template.execute(new TransactionalExecutor() {
+
             @Override
             public Object execute() throws Throwable {
-                return joinPoint.proceed();
+                return null;
+            }
+
+            @Override
+            public TransactionInfo getTransactionInfo() {
+                return null;
             }
         });
     }

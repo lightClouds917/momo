@@ -1,11 +1,10 @@
 package com.java4all.momo.core;
 
-
 /**
- * @author IT云清
+ * @author ITyunqing
  */
-public class GlobalTransaction {
+public interface GlobalTransaction {
 
-
-
+    void begin(int timeout);
+    void begin(int timeout,String name);
 }

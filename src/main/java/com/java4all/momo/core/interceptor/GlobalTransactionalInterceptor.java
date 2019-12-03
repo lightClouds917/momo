@@ -1,7 +1,6 @@
 package com.java4all.momo.core.interceptor;
 
 import com.java4all.momo.annotation.GlobalTransactional;
-import com.java4all.momo.core.GlobalTransaction;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import org.aopalliance.intercept.MethodInterceptor;
