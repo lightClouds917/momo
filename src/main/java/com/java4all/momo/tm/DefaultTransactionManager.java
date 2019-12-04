@@ -1,6 +1,5 @@
 package com.java4all.momo.tm;
 
-import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import com.java4all.momo.constant.GlobalStatus;
 import com.java4all.momo.exception.RemoteCallExcaption;
 import com.java4all.momo.netty.TmRpcClient;
@@ -45,11 +44,10 @@ public class DefaultTransactionManager extends ChannelInboundHandlerAdapter impl
             response = (GlobalBeginResponse) TmRpcClient.syncCall(request);
         }catch (Exception ex){
             String info = "global transaction begin failed";
-            LOGGER.info("{}",info,ex);
+            LOGGER.error("{}",info,ex);
             throw new RemoteCallExcaption(info);
         }
-        String xid = response.getXid();
-        return xid;
+        return response.getXid();
     }
 
     /**
