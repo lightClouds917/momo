@@ -3,6 +3,7 @@ package com.java4all.momo.core;
 
 import com.java4all.momo.constant.GlobalStatus;
 import com.java4all.momo.constant.StoreMode;
+import com.java4all.momo.exception.NeverHappenExcetion;
 
 /**
  * @author IT云清
@@ -44,6 +45,14 @@ public class DefaultGlobalTransaction implements GlobalTransaction{
 
     @Override
     public void begin(int timeout, String name) {
+        if(globalTransactionRole == GlobalTransactionRole.Participant){
 
+        }
+    }
+
+    private void check(){
+        if(xid == null){
+            throw new NeverHappenExcetion("xid can not be null");
+        }
     }
 }

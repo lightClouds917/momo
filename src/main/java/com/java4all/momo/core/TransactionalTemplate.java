@@ -3,6 +3,9 @@ package com.java4all.momo.core;
 import com.java4all.momo.context.GlobalTransactionContext;
 import com.java4all.momo.entity.TransactionInfo;
 import com.java4all.momo.exception.NeverHappenExcetion;
+import com.java4all.momo.tm.hook.TransactionHook;
+import com.java4all.momo.tm.hook.TransactionHookManager;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,17 +29,31 @@ public class TransactionalTemplate {
         //2.begin
         this.beginTransaction(tx,transactionInfo);
 
-
-
-
-
         //TODO
         return null;
     }
 
     private void beginTransaction(GlobalTransaction tx, TransactionInfo transactionInfo) {
+        this.triggerBeforeBegin();
         tx.begin(transactionInfo.getTimeOut(),transactionInfo.getName());
+        this.triggerAfterBegin();
 
     }
 
+    private void triggerBeforeBegin(){
+        for(TransactionHook hook:this.getCurrentHooKs()){
+            hook.beforeBegin();
+        }
+    }
+
+    private void triggerAfterBegin(){
+        for(TransactionHook hook:this.getCurrentHooKs()){
+            hook.afterBegin();
+        }
+    }
+
+
+    private List<TransactionHook> getCurrentHooKs(){
+        return TransactionHookManager.getHooks();
+    }
 }
