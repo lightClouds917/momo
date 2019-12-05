@@ -17,6 +17,7 @@ public class DefaultGlobalTransaction implements GlobalTransaction{
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultGlobalTransaction.class);
 
     private static final int DEFAULT_GLOBAL_TX_TIMEOUT = 60000;
+    private static final int COMMIT_RETRY_COUNT = 1;
 
     private String xid;
 
@@ -71,6 +72,40 @@ public class DefaultGlobalTransaction implements GlobalTransaction{
         RootContext.bind(xid);
         if(LOGGER.isInfoEnabled()){
             LOGGER.info("Begin new global transation, xid = {}",xid);
+        }
+    }
+
+    @Override
+    public void commit() throws Exception {
+        if(globalTransactionRole == GlobalTransactionRole.Participant){
+            if(LOGGER.isInfoEnabled()){
+                LOGGER.info("Ignore Commit():just participate in the current global transaction");
+            }
+            return;
+        }
+
+        if(xid == null){
+            throw new IllegalStateException();
+        }
+        int retry = COMMIT_RETRY_COUNT;
+        try{
+            while (retry>0){
+                try{
+                    globalStatus = transactionManager.commit(xid);
+                    break;
+                }catch (Exception ex){
+                    retry --;
+                    if(retry == 0){
+                        throw new Exception("failed to report global commit:"+xid);
+                    }
+                }
+            }
+        }finally {
+            if(RootContext.getXID() != null){
+                if(xid.equals(RootContext.getXID())){
+                    RootContext.unbind();
+                }
+            }
         }
     }
 

@@ -28,9 +28,25 @@ public class TransactionalTemplate {
 
         //2.begin
         this.beginTransaction(tx,transactionInfo);
+        
+        try{
+            business.execute();
+        }catch (Exception ex){
+            //TODO
+            throw ex;
+        }
+        
+        //4.commit 
+        this.commitTransaction(tx);
+        
+        
 
         //TODO
         return null;
+    }
+
+    private void commitTransaction(GlobalTransaction tx) {
+        tx.commit();
     }
 
     private void beginTransaction(GlobalTransaction tx, TransactionInfo transactionInfo) {
