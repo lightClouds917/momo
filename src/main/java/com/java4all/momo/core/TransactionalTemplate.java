@@ -45,8 +45,22 @@ public class TransactionalTemplate {
         return null;
     }
 
-    private void commitTransaction(GlobalTransaction tx) {
+    private void commitTransaction(GlobalTransaction tx) throws Exception {
+        this.triggerBeforeCommit();
         tx.commit();
+        this.triggerAfterCommit();
+    }
+
+    private void triggerBeforeCommit() {
+        for(TransactionHook  hook:this.getCurrentHooKs()){
+            hook.beforeCommit();
+        }
+    }
+
+    private void triggerAfterCommit() {
+        for(TransactionHook hook:this.getCurrentHooKs()){
+            hook.afterCommit();
+        }
     }
 
     private void beginTransaction(GlobalTransaction tx, TransactionInfo transactionInfo) {
