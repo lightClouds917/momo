@@ -32,6 +32,7 @@ public class TransactionalTemplate {
         try{
             business.execute();
         }catch (Exception ex){
+            this.completeTransactionAfterThrow(transactionInfo,tx,ex);
             //TODO
             throw ex;
         }
@@ -43,6 +44,13 @@ public class TransactionalTemplate {
 
         //TODO
         return null;
+    }
+
+    private void completeTransactionAfterThrow(TransactionInfo transactionInfo,
+            GlobalTransaction tx, Exception ex) {
+        if(transactionInfo != null ){
+
+        }
     }
 
     private void commitTransaction(GlobalTransaction tx) throws Exception {

@@ -1,5 +1,9 @@
 package com.java4all.momo.entity;
 
+import com.java4all.momo.exception.NoRollbackRule;
+import com.java4all.momo.exception.RollbackRule;
+import java.util.Set;
+
 /**
  * @author ITyunqing
  */
@@ -11,7 +15,7 @@ public class TransactionInfo {
 
     private String name;
 
-    //TODO add rollback rolls
+    private Set<RollbackRule> rollbackRules;
 
     public int getTimeOut() {
         return timeOut;
@@ -27,5 +31,25 @@ public class TransactionInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<RollbackRule> getRollbackRules() {
+        return rollbackRules;
+    }
+
+
+    public void setRollbackRules(Set<RollbackRule> rollbackRules) {
+        this.rollbackRules = rollbackRules;
+    }
+
+    public boolean rollbackOn(Throwable ex){
+        RollbackRule winner = null;
+        int deepest = Integer.MAX_VALUE;
+        if(this.rollbackRules != null){
+            for(RollbackRule rule:rollbackRules){
+                //todo
+            }
+        }
+        return true;
     }
 }
