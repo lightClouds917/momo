@@ -47,9 +47,13 @@ public class TransactionInfo {
         int deepest = Integer.MAX_VALUE;
         if(this.rollbackRules != null){
             for(RollbackRule rule:rollbackRules){
-                //todo
+                int depth = rule.getDepth(ex);
+                if(depth >= 0 && deepest < deepest){
+                    deepest = depth;
+                    winner = rule;
+                }
             }
         }
-        return true;
+        return winner == null || !(winner instanceof NoRollbackRule);
     }
 }
