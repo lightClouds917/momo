@@ -3,6 +3,7 @@ package com.java4all.momo.core;
 import com.java4all.momo.context.GlobalTransactionContext;
 import com.java4all.momo.entity.TransactionInfo;
 import com.java4all.momo.exception.NeverHappenExcetion;
+import com.java4all.momo.exception.TransactionException;
 import com.java4all.momo.tm.hook.TransactionHook;
 import com.java4all.momo.tm.hook.TransactionHookManager;
 import java.util.List;
@@ -47,9 +48,35 @@ public class TransactionalTemplate {
     }
 
     private void completeTransactionAfterThrow(TransactionInfo transactionInfo,
-            GlobalTransaction tx, Exception ex) {
-        if(transactionInfo != null ){
+            GlobalTransaction tx, Exception ex) throws Exception {
+        if(transactionInfo != null && transactionInfo.rollbackOn(ex)){
+            try{
+                this.rollbackTransaction(tx,ex);
+            }catch (TransactionException tex){
 
+            }
+        }else {
+            //not rollback on this exception,so commit
+            this.commitTransaction(tx);
+        }
+    }
+
+    private void rollbackTransaction(GlobalTransaction tx, Exception ex)throws TransactionException {
+        this.triggerBeforeRollback();
+        tx.rollback();
+        this.triggerAfterRollback();
+        //TODO should throw something
+    }
+
+    private void triggerAfterRollback() {
+        for(TransactionHook hook:this.getCurrentHooKs()){
+            hook.afterRollback();
+        }
+    }
+
+    private void triggerBeforeRollback() {
+        for(TransactionHook hook:this.getCurrentHooKs()){
+            hook.beforeRollback();
         }
     }
 

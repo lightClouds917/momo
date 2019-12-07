@@ -1,5 +1,7 @@
 package com.java4all.momo.core;
 
+import com.java4all.momo.exception.TransactionException;
+
 /**
  * @author ITyunqing
  */
@@ -23,4 +25,10 @@ public interface GlobalTransaction {
      * @throws Exception
      */
     void commit() throws Exception;
+
+    /**
+     * global rollback
+     * @throws TransactionException
+     */
+    void rollback() throws TransactionException;
 }
