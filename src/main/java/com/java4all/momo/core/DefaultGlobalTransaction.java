@@ -5,6 +5,7 @@ import com.java4all.momo.constant.GlobalStatus;
 import com.java4all.momo.constant.StoreMode;
 import com.java4all.momo.context.RootContext;
 import com.java4all.momo.exception.NeverHappenExcetion;
+import com.java4all.momo.exception.TransactionException;
 import com.java4all.momo.tm.TransactionManager;
 import org.aspectj.apache.bcel.generic.LOOKUPSWITCH;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ public class DefaultGlobalTransaction implements GlobalTransaction{
 
     private static final int DEFAULT_GLOBAL_TX_TIMEOUT = 60000;
     private static final int COMMIT_RETRY_COUNT = 1;
+    private static final int ROLLBACK_RETRY_COUNT = 1;
 
     private String xid;
 
@@ -105,6 +107,30 @@ public class DefaultGlobalTransaction implements GlobalTransaction{
                 if(xid.equals(RootContext.getXID())){
                     RootContext.unbind();
                 }
+            }
+        }
+    }
+
+    /**
+     * global rollback
+     */
+    @Override
+    public void rollback() throws TransactionException {
+        if(globalTransactionRole.equals(GlobalTransactionRole.Participant)){
+            if(LOGGER.isInfoEnabled()){
+                LOGGER.info("Ignore rollback():just participate in the current global transaction");
+            }
+        }
+        if(xid == null){
+            throw new IllegalArgumentException();
+        }
+        int retry = ROLLBACK_RETRY_COUNT;
+
+        while(true){
+            try {
+                transactionManager.rollback(xid);
+            }catch (Exception ex){
+
             }
         }
     }

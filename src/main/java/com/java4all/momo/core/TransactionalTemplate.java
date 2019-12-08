@@ -53,7 +53,7 @@ public class TransactionalTemplate {
             try{
                 this.rollbackTransaction(tx,ex);
             }catch (TransactionException tex){
-
+//TODO
             }
         }else {
             //not rollback on this exception,so commit
