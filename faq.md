@@ -1,31 +1,36 @@
 # 常见问题
 
 <a href="#1" target="_self">Seata 目前可以用于生产环境吗？</a>
+
 <a href="#2" target="_self">Seata 目前支持高可用吗？</a>
+
 <a href="#3" target="_self">undo_log表log_status=1的记录是做什么用的？</a>
+
 <a href="#4" target="_self">怎么使用Seata框架，来保证事务的隔离性？</a>
+
 <a href="#5" target="_self">脏数据回滚失败如何处理?</a>
+
 <a href="#6" target="_self">为什么分支事务注册时, 全局事务状态不是begin？</a>
+
 <a href="#7" target="_self">Nacos 作为 Seata 配置中心时，项目启动报错找不到服务。如何排查，如何处理?</a>
+
 <a href="#8" target="_self">Eureka做注册中心，TC高可用时，如何在TC端覆盖Eureka属性?</a>
+
 <a href="#9" target="_self">java.lang.NoSuchMethodError: com.fasterxml.jackson.databind.jsontype.TypeSerializer.typeId</a>
 
-
+********
 ###<h3 id='1'> Q: Seata 目前可以用于生产环境吗？</h3>
 
 **A:** 
 0.4.2版本就可以上生产了环境了，欢迎已经在使用的企业参与次issue:[who's using Seata](https://github.com/seata/seata/issues/1246)
 
 ********
-
 ###<h3 id='2'> Q: Seata 目前支持高可用吗？</h3>
 
 **A:** 
 0.6版本开始支持，tc使用db模式共享全局事务会话信息，注册中心使用非file的seata支持的第三方注册中心
 
 ********
-
-
 ###<h3 id='3'> Q: undo_log表log_status=1的记录是做什么用的？</h3>
 
 **A:** 
