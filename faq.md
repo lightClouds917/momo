@@ -22,7 +22,7 @@
 <h3 id='1'>Q: Seata 目前可以用于生产环境吗？</h3>
 
 **A:** 
-0.4.2版本就可以上生产了环境了，欢迎已经在使用的企业参与次issue:[who's using Seata](https://github.com/seata/seata/issues/1246)
+0.4.2版本之后就可以上生产环境，欢迎已经在使用的企业参与此issue:[who's using Seata](https://github.com/seata/seata/issues/1246)
 
 ********
 <h3 id='2'>Q: Seata 目前支持高可用吗？</h3>
