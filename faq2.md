@@ -25,13 +25,13 @@
 Since version 0.4.2,it is supported in production environment,Users who are using seata are welcome to complete this issue together:[who's using Seata](https://github.com/seata/seata/issues/1246)
 
 ********
-<h3 id='1'>Q: Dose Seata support high availability ?</h3>
+<h3 id='2'>Q: Dose Seata support high availability ?</h3>
 
 **A:** 
 supported from version 0.6, tc USES db mode to share global transaction session information, and the registry USES non-file seata-supported third-party registries
 
 ********
-<h3 id='1'>Q: What is the use of the record of undo log table log status = 1 ?</h3>
+<h3 id='3'>Q: What is the use of the record of undo log table log status = 1 ?</h3>
 
 **A:** 
 
@@ -40,7 +40,7 @@ supported from version 0.6, tc USES db mode to share global transaction session 
 **Anti-suspension measures:** when a rolls back and finds that the rollback undo has not been inserted, an undo record with log_status=1 is inserted. When a local transaction (business write operation SQL and corresponding undo are a local transaction) is committed, it fails due to the primary key conflict of the undo table.
 
 ********
-<h3 id='1'>Q: How to use the Seata framework to ensure transaction isolation?</h3>
+<h3 id='4'>Q: How to use the Seata framework to ensure transaction isolation?</h3>
 
 **A:** 
 Since seata phase 1 local transactions have been committed, enhanced isolation is needed to prevent other transactions from dirty reads and dirty writes.
@@ -51,7 +51,7 @@ Since seata phase 1 local transactions have been committed, enhanced isolation i
         Using the GlobalTransactional annotation adds some unnecessary additional RPC overhead such as begin returning xid, commit transaction, etc. GlobalLock simplifies the RPC process for higher performance.
 
 ********
-<h3 id='1'>Q: When Failed to roll back dirty data, what shall I do ?</h3>
+<h3 id='5'>Q: When Failed to roll back dirty data, what shall I do ?</h3>
 
 **A:** 
   1. The dirty data needs to be processed manually, and the data can be corrected according to the log prompt, or the corresponding undo can be deleted (the FailureHandler can be customized for email notification or other purposes).
@@ -59,7 +59,7 @@ Since seata phase 1 local transactions have been committed, enhanced isolation i
     node：It is recommended to isolate the dirty data in advance
 
 ********
-<h3 id='1'>Q: Why the global transaction state is not "begin" when a branch transaction is registered ?</h3>
+<h3 id='6'>Q: Why the global transaction state is not "begin" when a branch transaction is registered ?</h3>
 
 A:  
     **abnormal：**Could not register branch into global session xid = status = Rollbacked（Two phase state and Rollbacking, AsyncCommitting, etc） while expecting Begin
@@ -71,7 +71,7 @@ A:
   3. Tc is aware of the global transaction timeout (@globaltransactional (timeoutMills = default 60 seconds)), actively changes the state and notifies each branch transaction to rollback when a new branch transaction is registered.
 
 ********
-<h3 id='1'>Q: When Nacos is used as the Seata configuration center, the project startup error report cannot find the service. How to check and deal with it ?</h3>
+<h3 id='7'>Q: When Nacos is used as the Seata configuration center, the project startup error report cannot find the service. How to check and deal with it ?</h3>
 
 A： 
 abnormal：io.seata.common.exception.FrameworkException: can not register RM,err:can not connect to services-server.
@@ -104,7 +104,7 @@ UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=75 -verbose:gc 
           "$@"
 ```
 
-<h3 id='1'>Q: When Eureka is the registry and TC is highly available, how to overwrite Eureka properties at the TC end?</h3>
+<h3 id='8'>Q: When Eureka is the registry and TC is highly available, how to overwrite Eureka properties at the TC end?</h3>
 A： Add the eureka-client.properties file in the seata\conf directory and add the Eureka properties to be overwritten.
 For example, to overwrite eureka.instance.lease-renewal-interval-in-seconds and eureka.instance.lease-expiration-duration-in-seconds, add the following:
 
@@ -112,7 +112,7 @@ eureka.lease.renewalInterval=1
 eureka.lease.duration=2
 The attribute prefix is eureka, and the subsequent attribute names can refer to the class com.netflix.appinfo.PropertyBasedInstanceConfigConstants. You can also study the seata-discovery-eureka project of the discovery module in the seata source code.
 
-<h3 id='1'>Q: What's the reason of java.lang.NoSuchMethodError: com.fasterxml.jackson.databind.jsontype.TypeSerializer.typeId(Ljava/lang/Object;Lcom/fasterxml/jackson/core/JsonToken;) ?</h3>
+<h3 id='9'>Q: What's the reason of java.lang.NoSuchMethodError: com.fasterxml.jackson.databind.jsontype.TypeSerializer.typeId(Ljava/lang/Object;Lcom/fasterxml/jackson/core/JsonToken;) ?</h3>
 
 **A:**
 when the undolog serialization is configured as Jackson, the Jackson version needs to be 2.9.9+
