@@ -61,9 +61,9 @@ Since seata phase 1 local transactions have been committed, enhanced isolation i
 ********
 <h3 id='6'>Q: Why the global transaction state is not "begin" when a branch transaction is registered ?</h3>
 
-A:  
-    **abnormal：**Could not register branch into global session xid = status = Rollbacked（Two phase state and Rollbacking, AsyncCommitting, etc） while expecting Begin
-    **describe：**When a branch transaction is registered, the global transaction status must be a one-phase state "begin", and registration other than "begin" is not allowed. It belongs to the normal processing at the seata framework level, and users can solve it from their own business level.
+**A:** 
+**abnormal：** Could not register branch into global session xid = status = Rollbacked（Two phase state and Rollbacking, AsyncCommitting, etc） while expecting Begin
+**describe：** When a branch transaction is registered, the global transaction status must be a one-phase state "begin", and registration other than "begin" is not allowed. It belongs to the normal processing at the seata framework level, and users can solve it from their own business level.
     This exception can occur in the following situations (you can continue to add).
 
   1. The branch transaction is asynchronous. The global transaction is not aware of its progress. The global transaction has entered phase 2 before the asynchronous branch comes to register.
@@ -73,7 +73,7 @@ A:
 ********
 <h3 id='7'>Q: When Nacos is used as the Seata configuration center, the project startup error report cannot find the service. How to check and deal with it ?</h3>
 
-A： 
+**A:** 
 abnormal：io.seata.common.exception.FrameworkException: can not register RM,err:can not connect to services-server.
   1. Check the nacos configuration list to see if the seata configuration has been imported successfully.
   2. Check the list of nacos services to see if serverAddr has been registered successfully.
@@ -103,15 +103,15 @@ UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=75 -verbose:gc 
           io.seata.server.Server \
           "$@"
 ```
-
+********
 <h3 id='8'>Q: When Eureka is the registry and TC is highly available, how to overwrite Eureka properties at the TC end?</h3>
-A： Add the eureka-client.properties file in the seata\conf directory and add the Eureka properties to be overwritten.
+**A:** Add the eureka-client.properties file in the seata\conf directory and add the Eureka properties to be overwritten.
 For example, to overwrite eureka.instance.lease-renewal-interval-in-seconds and eureka.instance.lease-expiration-duration-in-seconds, add the following:
 
 eureka.lease.renewalInterval=1  
 eureka.lease.duration=2
 The attribute prefix is eureka, and the subsequent attribute names can refer to the class com.netflix.appinfo.PropertyBasedInstanceConfigConstants. You can also study the seata-discovery-eureka project of the discovery module in the seata source code.
-
+********
 <h3 id='9'>Q: What's the reason of java.lang.NoSuchMethodError: com.fasterxml.jackson.databind.jsontype.TypeSerializer.typeId(Ljava/lang/Object;Lcom/fasterxml/jackson/core/JsonToken;) ?</h3>
 
 **A:**
