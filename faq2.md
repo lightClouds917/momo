@@ -110,6 +110,7 @@ UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=75 -verbose:gc 
 ```
 ********
 <h3 id='8'>Q: When Eureka is the registry and TC is highly available, how to overwrite Eureka properties at the TC end?</h3>
+
 **A:** 
 Add the eureka-client.properties file in the seata\conf directory and add the Eureka properties to be overwritten.
 For example, to overwrite eureka.instance.lease-renewal-interval-in-seconds and eureka.instance.lease-expiration-duration-in-seconds, add the following:
