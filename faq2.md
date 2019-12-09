@@ -35,8 +35,10 @@ supported from version 0.6, tc USES db mode to share global transaction session 
 
 **A:** 
 
-* Scenario:  after A branch transaction A registers TC, A global transaction rollback occurs before A local transaction commits
+**Scenario:**  after A branch transaction A registers TC, A global transaction rollback occurs before A local transaction commits
+
 **Consequence:** global transaction rollback succeeds, a resource is occupied, resulting in resource suspension problem
+
 **Anti-suspension measures:** when a rolls back and finds that the rollback undo has not been inserted, an undo record with log_status=1 is inserted. When a local transaction (business write operation SQL and corresponding undo are a local transaction) is committed, it fails due to the primary key conflict of the undo table.
 
 ********
@@ -62,8 +64,11 @@ Since seata phase 1 local transactions have been committed, enhanced isolation i
 <h3 id='6'>Q: Why the global transaction state is not "begin" when a branch transaction is registered ?</h3>
 
 **A:** 
+
 **abnormal：** Could not register branch into global session xid = status = Rollbacked（Two phase state and Rollbacking, AsyncCommitting, etc） while expecting Begin
+
 **describe：** When a branch transaction is registered, the global transaction status must be a one-phase state "begin", and registration other than "begin" is not allowed. It belongs to the normal processing at the seata framework level, and users can solve it from their own business level.
+    
     This exception can occur in the following situations (you can continue to add).
 
   1. The branch transaction is asynchronous. The global transaction is not aware of its progress. The global transaction has entered phase 2 before the asynchronous branch comes to register.
@@ -105,7 +110,8 @@ UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=75 -verbose:gc 
 ```
 ********
 <h3 id='8'>Q: When Eureka is the registry and TC is highly available, how to overwrite Eureka properties at the TC end?</h3>
-**A:** Add the eureka-client.properties file in the seata\conf directory and add the Eureka properties to be overwritten.
+**A:** 
+Add the eureka-client.properties file in the seata\conf directory and add the Eureka properties to be overwritten.
 For example, to overwrite eureka.instance.lease-renewal-interval-in-seconds and eureka.instance.lease-expiration-duration-in-seconds, add the following:
 
 eureka.lease.renewalInterval=1  
