@@ -27,24 +27,35 @@ public class TransactionalTemplate {
             throw new NeverHappenExcetion("transaction does not exit");
         }
 
-        //2.begin
-        this.beginTransaction(tx,transactionInfo);
-        
         try{
-            business.execute();
-        }catch (Exception ex){
-            this.completeTransactionAfterThrow(transactionInfo,tx,ex);
-            //TODO
-            throw ex;
-        }
-        
-        //4.commit 
-        this.commitTransaction(tx);
-        
-        
+            //2.begin
+            this.beginTransaction(tx,transactionInfo);
+            Object rs = null;
+            try{
+                rs = business.execute();
+            }catch (Exception ex){
+                //3.rollback when the business execute failed
+                this.completeTransactionAfterThrow(transactionInfo,tx,ex);
+                throw ex;
+            }
 
-        //TODO
-        return null;
+            //4.commit
+            this.commitTransaction(tx);
+            return rs;
+        }finally {
+            this.triggerAfterCompletion();
+            this.cleanUp();
+        }
+    }
+
+    private void cleanUp() {
+        TransactionHookManager.clear();
+    }
+
+    private void triggerAfterCompletion() {
+        for(TransactionHook hook:this.getCurrentHooKs()) {
+            hook.afterCompletion();
+        }
     }
 
     private void completeTransactionAfterThrow(TransactionInfo transactionInfo,
@@ -61,7 +72,7 @@ public class TransactionalTemplate {
         }
     }
 
-    private void rollbackTransaction(GlobalTransaction tx, Exception ex)throws TransactionException {
+    private void rollbackTransaction(GlobalTransaction tx, Exception ex)throws Exception {
         this.triggerBeforeRollback();
         tx.rollback();
         this.triggerAfterRollback();
