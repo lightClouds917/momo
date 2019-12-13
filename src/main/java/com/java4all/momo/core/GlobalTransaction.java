@@ -28,7 +28,7 @@ public interface GlobalTransaction {
 
     /**
      * global rollback
-     * @throws TransactionException
+     * @throws Exception
      */
-    void rollback() throws TransactionException;
+    void rollback() throws Exception;
 }

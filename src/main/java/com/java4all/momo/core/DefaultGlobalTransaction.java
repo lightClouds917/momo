@@ -85,7 +85,6 @@ public class DefaultGlobalTransaction implements GlobalTransaction{
             }
             return;
         }
-
         if(xid == null){
             throw new IllegalStateException();
         }
@@ -115,7 +114,7 @@ public class DefaultGlobalTransaction implements GlobalTransaction{
      * global rollback
      */
     @Override
-    public void rollback() throws TransactionException {
+    public void rollback() throws Exception {
         if(globalTransactionRole.equals(GlobalTransactionRole.Participant)){
             if(LOGGER.isInfoEnabled()){
                 LOGGER.info("Ignore rollback():just participate in the current global transaction");
@@ -126,11 +125,25 @@ public class DefaultGlobalTransaction implements GlobalTransaction{
         }
         int retry = ROLLBACK_RETRY_COUNT;
 
-        while(true){
-            try {
-                transactionManager.rollback(xid);
-            }catch (Exception ex){
-
+        try {
+            while(true){
+                if(retry > 0){
+                    try {
+                        transactionManager.rollback(xid);
+                        break;
+                    }catch (Exception ex){
+                        retry --;
+                        if(retry == 0){
+                            throw new Exception("failed to report the global rollback "+xid);
+                        }
+                    }
+                }
+            }
+        }finally {
+            if(RootContext.getXID() != null){
+                if(xid == RootContext.getXID()){
+                    RootContext.unbind();
+                }
             }
         }
     }
