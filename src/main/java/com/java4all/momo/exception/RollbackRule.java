@@ -4,6 +4,7 @@ import java.io.Serializable;
 import org.springframework.util.StringUtils;
 
 /**
+ * Rollback rule
  * @author ITyunqing
  */
 public class RollbackRule implements Serializable{
@@ -16,7 +17,7 @@ public class RollbackRule implements Serializable{
 
 
     /**
-     * Recursive lookup
+     * Recursive lookup,if this is not,look up superclass
      * @param exceptionClass
      * @param depth
      * @return

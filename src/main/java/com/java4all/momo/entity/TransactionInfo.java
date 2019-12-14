@@ -5,6 +5,7 @@ import com.java4all.momo.exception.RollbackRule;
 import java.util.Set;
 
 /**
+ * Transaction info
  * @author ITyunqing
  */
 public class TransactionInfo {
@@ -42,6 +43,11 @@ public class TransactionInfo {
         this.rollbackRules = rollbackRules;
     }
 
+    /**
+     * if this ex should rollback on
+     * @param ex
+     * @return
+     */
     public boolean rollbackOn(Throwable ex){
         RollbackRule winner = null;
         int deepest = Integer.MAX_VALUE;
@@ -54,6 +60,7 @@ public class TransactionInfo {
                 }
             }
         }
+        //winner == null,means not rollback on this
         return winner == null || !(winner instanceof NoRollbackRule);
     }
 }
