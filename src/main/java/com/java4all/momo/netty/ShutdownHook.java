@@ -22,4 +22,8 @@ public class ShutdownHook extends Thread{
     public static ShutdownHook getInstance(){
         return SHUTDOWN_HOOK;
     }
+
+    public static void removeRuntimeShutdownHook(){
+        Runtime.getRuntime().removeShutdownHook(SHUTDOWN_HOOK);
+    }
 }
