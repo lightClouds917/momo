@@ -1,6 +1,5 @@
 package com.java4all.momo.core;
 
-import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import com.java4all.momo.constant.TransactionType;
 import com.java4all.momo.tm.DefaultTransactionManager;
 import io.netty.bootstrap.ServerBootstrap;
@@ -26,7 +25,7 @@ public class NettyServer {
 
     // socket -> nettydemo TODO 待处理
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalTransactionalAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NettyServer.class);
 
     private static Map<String,List<String>> transactionIdMap = new HashMap<>();
 

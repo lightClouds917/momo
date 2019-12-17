@@ -19,8 +19,10 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class MomoRestTemplateAutoConfiguration {
 
-    @Autowired(required = true)
+
+    @Autowired(required = false)
     private Collection<RestTemplate> restTemplates;
+    //TODO true or false
 
     @Autowired
     private MomoRestTemplateInterceptor momoRestTemplateInterceptor;

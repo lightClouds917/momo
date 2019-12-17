@@ -1,6 +1,5 @@
 package com.java4all.momo.connection;
 
-import com.java4all.momo.aspect.GlobalTransactionalAspect;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -26,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author IT云清
  */
 public class ConnectionProxy implements Connection {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalTransactionalAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionProxy.class);
 
     /**Spring Connection*/
     private Connection connection;
