@@ -6,13 +6,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * Spring util
  * @author ITyunqing
  */
-@SuppressWarnings("all")
 public class SpringUtil {
 
     /**
-     * from seata
+     * get all interface
      * @param bean
      * @return
      */
@@ -31,7 +31,7 @@ public class SpringUtil {
 
 
     /**
-     * get all interfaces of a bean
+     * get all interfaces of a bean,include super interface
      * @param bean the bean
      * @return interfaces
      */
@@ -45,7 +45,7 @@ public class SpringUtil {
     }
 
     /**
-     * get all supper clazz
+     * get all supper clazz of a bean
      * @param clazz  the clazz
      * @param superClazzList  the superInterfaces list
      */
