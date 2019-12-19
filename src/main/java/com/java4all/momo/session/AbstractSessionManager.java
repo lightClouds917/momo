@@ -4,12 +4,18 @@ import com.java4all.momo.constant.BranchStatus;
 import com.java4all.momo.constant.GlobalStatus;
 import java.util.Collection;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * AbstractSessionManager
  * @author ITyunqing
  */
 public class AbstractSessionManager implements SessionManager, SessionLifecycleListener{
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSessionManager.class);
+
+    private TransactionStoreManager transactionStoreManager;
 
     @Override
     public void destroy() {
