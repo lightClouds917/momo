@@ -6,7 +6,10 @@ package com.java4all.momo.session;
  */
 public interface SessionStorable {
 
+
     byte[] encode();
 
     void decode(byte[] src);
+
+    //TODO
 }
