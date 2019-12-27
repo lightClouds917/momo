@@ -85,3 +85,5 @@ Transactional rollbackFor属性 https://www.cnblogs.com/clwydjgs/p/9317849.html 
 https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E  sca
 
 传播属性：https://blog.csdn.net/qianxiaopeng/article/details/82427689
+
+传播属性相关：https://www.jianshu.com/p/149de22ca54b
