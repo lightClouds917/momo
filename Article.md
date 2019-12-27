@@ -83,3 +83,5 @@ easyTransaction https://github.com/QNJR-GROUP/EasyTransaction
 Transactional rollbackFor属性 https://www.cnblogs.com/clwydjgs/p/9317849.html  https://zhuanlan.zhihu.com/p/38208248  https://www.jianshu.com/p/9098372c108a
 
 https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E  sca
+
+传播属性：https://blog.csdn.net/qianxiaopeng/article/details/82427689
